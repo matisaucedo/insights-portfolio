@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Lenis smooth scroll (exact from Minta source) ─────────────────────── */
+.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-optical-sizing: auto;
+  }
+
+  body {
+    background-color: #000;
+    color: #fff;
+    font-family: "Inter", system-ui, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  /* Exact token aliases */
+  .text-muted   { color: #c2c2c2; }
+  .text-muted2  { color: #8a8a8a; }
+  .bg-surface   { background-color: #0d0d0d; }
+  .bg-surface2  { background-color: #0f0f0f; }
+
+  /* Card tokens */
+  .card-bg     { background-color: rgba(255,255,255,0.06); }
+  .card-border { border: 1px solid rgba(255,255,255,0.12); }
+
+  /* Typography presets (exact from reference) */
+  .t-h1 {
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1.1em;
+    letter-spacing: -0.04em;
+    color: #fff;
+  }
+  .t-h2 {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.1em;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .t-lg {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.3em;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .t-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4em;
+    letter-spacing: 0;
+    color: #c2c2c2;
+  }
+  .t-sm {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3em;
+    letter-spacing: 0;
+    color: #c2c2c2;
+  }
+
+  /* Section padding — desktop 96px, tablet 72px, mobile 56px */
+  .section-py {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  /* Container */
+  .container-minta {
+    max-width: 1128px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @media (max-width: 1199px) {
+    .section-py { padding-top: 80px; padding-bottom: 80px; }
+  }
+  @media (max-width: 809px) {
+    .section-py { padding-top: 64px; padding-bottom: 64px; }
+    .container-minta { padding-left: 16px; padding-right: 16px; }
+    .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  }
+
+  /* GPU-accelerated layer */
+  .gpu-layer {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+}
+
+/* ── Pulsing Orb (Minta ambient decoration) ──────────────────────────── */
+@keyframes pulsing-orb {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulsing-orb-ring {
+    animation: none !important;
+  }
+}
