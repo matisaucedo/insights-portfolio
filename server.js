@@ -9,11 +9,11 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ── No cache in dev ──
+// ── Cache control ──
 app.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
+  if (req.path.startsWith('/static/')) {
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  }
   next();
 });
 
@@ -102,7 +102,7 @@ const distDir = path.join(__dirname, 'dist');
 if (fs.existsSync(distDir)) {
   app.use(express.static(distDir));
   app.get('*', (_req, res) => {
-    res.sendFile(path.join(distDir, 'react.html'));
+    res.sendFile(path.join(distDir, 'index.html'));
   });
 } else {
   // Fallback: serve vanilla app during development (no build yet)
@@ -112,6 +112,6 @@ if (fs.existsSync(distDir)) {
   });
 }
 
-app.listen(PORT, '127.0.0.1', () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Portfolio running at http://localhost:${PORT}`);
 });
