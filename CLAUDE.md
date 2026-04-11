@@ -82,7 +82,7 @@ Typography:
   Stats:      Geist Mono weight 300, "tnum" "zero" enabled
   Labels:     Inter, weight 500, 11px, uppercase, letter-spacing: 0.14em
 
-Spacing: TailwindCSS default (4px base)
+Spacing: TailwindCSS default (4px base), section-py: 64/56/48px (desktop/tablet/mobile)
 Border:   1px solid rgba(255,255,255,0.08) — cards
           1px solid rgba(255,255,255,0.12) — UI elements
 ```
@@ -115,8 +115,8 @@ Border:   1px solid rgba(255,255,255,0.08) — cards
 7. **GuaranteesSection** ✅ — Shield icon, 3-col text
 8. **MobileApp** ✅ — Mobile app showcase section
 
-Nav: Fixed header, 56px height, blur backdrop, logo + links + CTA
-Footer: 4-col grid on desktop, collapses to 1-col on mobile (<809px)
+Nav: Fixed header, 56px height, blur backdrop, logo + Inicio/Proyectos/Nosotros links + CTA
+Footer: 3-col grid (Servicios, Tecnologías, Navegación) + bottom company description, collapses to 1-col on mobile (<809px)
 
 ---
 
@@ -154,6 +154,11 @@ npm run preview      # Build + serve at :3000
 - ✅ Team member photos updated: `assets/images/team/{federico,juan,matias,valentin}.png` → used in TeamSpotlight carousel (Nosotros section)
 - ✅ Speaker image updated: `assets/images/speaker.jpg` → displayed in Nosotros "En mis últimas charlas" section
 - ✅ Created `index.html` entry point for Vite dev server (mirrors react.html)
+- ✅ Section spacing tightened: `.section-py` 96→64px desktop, 80→56px tablet, 64→48px mobile
+- ✅ AIFeaturesSection custom padding reduced from 140px to 96px
+- ✅ Nav: Added "Inicio" tab linking to `/` (active state via existing `home` id logic)
+- ✅ Footer redesigned: 3 columns (Servicios, Tecnologías, Navegación) + company description text
+- ✅ Nosotros CTA: Added `paddingBottom: 96` for proper spacing from footer
 
 ---
 

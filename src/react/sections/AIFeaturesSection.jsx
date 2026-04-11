@@ -91,7 +91,7 @@ function MintaBeam() {
 
 export default function AIFeaturesSection() {
   return (
-    <Section id="ai" style={{ paddingTop: 140, paddingBottom: 140 }}>
+    <Section id="ai" style={{ paddingTop: 96, paddingBottom: 96 }}>
       {/* Top ambient glow — parallax */}
       <ParallaxLayer speed={0.3} className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 z-0">
         <div

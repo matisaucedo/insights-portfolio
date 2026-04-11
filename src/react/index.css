@@ -75,10 +75,10 @@
     color: #c2c2c2;
   }
 
-  /* Section padding — desktop 96px, tablet 72px, mobile 56px */
+  /* Section padding — tighter Minta-style spacing */
   .section-py {
-    padding-top: 96px;
-    padding-bottom: 96px;
+    padding-top: 64px;
+    padding-bottom: 64px;
   }
 
   /* Container */
@@ -91,10 +91,10 @@
   }
 
   @media (max-width: 1199px) {
-    .section-py { padding-top: 80px; padding-bottom: 80px; }
+    .section-py { padding-top: 56px; padding-bottom: 56px; }
   }
   @media (max-width: 809px) {
-    .section-py { padding-top: 64px; padding-bottom: 64px; }
+    .section-py { padding-top: 48px; padding-bottom: 48px; }
     .container-minta { padding-left: 16px; padding-right: 16px; }
     .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   }

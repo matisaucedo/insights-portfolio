@@ -42,6 +42,7 @@ export function Nav() {
   const location = useLocation();
   const active = location.pathname.split("/")[1] || "home";
   const links = [
+    { id: "home", label: "Inicio", path: "/" },
     { id: "proyectos", label: "Proyectos", path: "/proyectos" },
     { id: "nosotros", label: "Nosotros", path: "/nosotros" },
   ];
@@ -1271,7 +1272,7 @@ export function NosotrosScreen() {
 
         {/* Closing CTA */}
         <motion.div
-          style={{ textAlign: "center", paddingTop: 40 }}
+          style={{ textAlign: "center", paddingTop: 40, paddingBottom: 96 }}
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: "easeOut", delay: 0.6 }}
@@ -1326,12 +1327,29 @@ export function NosotrosScreen() {
 }
 
 /* ─── Footer ─────────────────────────────────────────────────────────────── */
-const FOOTER_LINKS = [
-  { heading: "Navegación", links: [
-    { label: "Proyectos",  path: "/proyectos" },
-    { label: "Nosotros",   path: "/nosotros" },
-    { label: "Privacidad", path: null },
-    { label: "Términos",   path: null },
+const FOOTER_COLS = [
+  { heading: "Servicios", items: [
+    "Desarrollo de Software",
+    "Apps iOS y Android",
+    "Plataformas Web",
+    "E-commerce",
+    "Integración de IA",
+    "Automatización",
+  ]},
+  { heading: "Tecnologías", items: [
+    "React | Next.js | Vue.js",
+    "Node.js | Express | NestJS",
+    "Python | Django | Flask",
+    "React Native | Flutter",
+    "PostgreSQL | MongoDB",
+    "OpenAI | LangChain",
+    "Docker | AWS | Vercel",
+    "Tailwind | Framer Motion",
+  ]},
+  { heading: "Navegación", items: [
+    { label: "Inicio", path: "/" },
+    { label: "Proyectos", path: "/proyectos" },
+    { label: "Nosotros", path: "/nosotros" },
   ]},
 ];
 
@@ -1343,73 +1361,71 @@ function Footer() {
         className="container-minta footer-grid"
         style={{
           paddingTop: 64,
-          paddingBottom: 64,
+          paddingBottom: 48,
           display: "grid",
-          gridTemplateColumns: "1fr auto",
-          gap: "48px 80px",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "48px 40px",
           alignItems: "start",
         }}
       >
-        {/* Logo */}
-        <div>
-          <div style={{ marginBottom: 12 }}>
-            <img src={LogoSvg} alt="Insights Software" style={{ height: 26, width: "auto", display: "block" }} />
-          </div>
-          <p style={{ fontSize: 13, color: "#8a8a8a", lineHeight: "1.55em", maxWidth: 220 }}>
-            Software a medida con IA como ventaja competitiva.
-          </p>
-        </div>
-        {/* Columns */}
-        {FOOTER_LINKS.map(col => (
+        {FOOTER_COLS.map(col => (
           <div key={col.heading}>
             <div style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", marginBottom: 16 }}>
               {col.heading}
             </div>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
-              {col.links.map(l => (
-                <li key={l.label}>
-                  <button
-                    onClick={() => l.path ? navigate(l.path) : null}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      padding: 0,
-                      fontSize: 13,
-                      color: "#8a8a8a",
-                      cursor: l.path ? "pointer" : "default",
-                      fontFamily: "Inter, system-ui, sans-serif",
-                      transition: "color 0.2s",
-                    }}
-                    onMouseEnter={e => l.path && (e.target.style.color = "#fff")}
-                    onMouseLeave={e => l.path && (e.target.style.color = "#8a8a8a")}
-                  >
-                    {l.label}
-                  </button>
-                </li>
-              ))}
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+              {col.items.map(item => {
+                const isLink = typeof item === "object";
+                const label = isLink ? item.label : item;
+                return (
+                  <li key={label}>
+                    {isLink ? (
+                      <button
+                        onClick={() => navigate(item.path)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          padding: 0,
+                          fontSize: 13,
+                          color: "#8a8a8a",
+                          cursor: "pointer",
+                          fontFamily: "Inter, system-ui, sans-serif",
+                          transition: "color 0.2s",
+                        }}
+                        onMouseEnter={e => (e.target.style.color = "#fff")}
+                        onMouseLeave={e => (e.target.style.color = "#8a8a8a")}
+                      >
+                        {label}
+                      </button>
+                    ) : (
+                      <span style={{ fontSize: 13, color: "#8a8a8a", lineHeight: "1.4em" }}>
+                        {label}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
       </div>
+      {/* Bottom description bar */}
       <div
         className="container-minta"
         style={{
           paddingTop: 24,
           paddingBottom: 32,
           borderTop: "1px solid rgba(255,255,255,0.06)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
         }}
       >
-        <p style={{ fontSize: 12, color: "#8a8a8a" }}>
+        <p style={{ fontSize: 11.5, color: "#666", lineHeight: "1.65em", maxWidth: 900, marginBottom: 12 }}>
+          Insights Software es una agencia líder en desarrollo de software a medida, aplicaciones móviles iOS y Android, y plataformas web escalables.
+          Especializados en React, Next.js, Node.js, Python e inteligencia artificial aplicada (OpenAI). Con más de 100 proyectos entregados y 100% de satisfacción, construimos
+          soluciones a medida con IA como ventaja competitiva. Presentes en Argentina, Uruguay, Colombia, Chile y España.
+        </p>
+        <p style={{ fontSize: 11.5, color: "#555" }}>
           © {new Date().getFullYear()} Insights Software. Todos los derechos reservados.
         </p>
-        <div style={{ display: "flex", gap: 20 }}>
-          {["Privacidad", "Términos"].map(l => (
-            <a key={l} href="#" style={{ fontSize: 12, color: "#8a8a8a", textDecoration: "none" }}>{l}</a>
-          ))}
-        </div>
       </div>
     </footer>
   );
