@@ -140,28 +140,6 @@ npm run preview      # Build + serve at :3000
 
 ---
 
-## Known Fixes (Completed)
-- ✅ Geist Mono font loaded via Google Fonts in react.html
-- ✅ RoadmapSection dots positioned correctly with `calc(OFFSETS[i] + 9px)`
-- ✅ SectionLabel accepts `center` prop, passed in 4 centered sections
-- ✅ Footer mobile grid collapses via `.footer-grid` media query in index.css
-- ✅ Server correctly serves dist/
-- ✅ Orphaned section files removed (AIFeatures, Roadmap, Stats, Testimonials, etc.)
-- ✅ Dev artifacts cleaned (screenshot scripts, PNGs, test-results)
-- ✅ Team photos directory created and files copied with correct names
-- ✅ server.js `/ref` route fixed to point to `assets/minta-framer-ai (1)/images`
-- ✅ package.json scripts updated (dev, build, start, preview)
-- ✅ Team member photos updated: `assets/images/team/{federico,juan,matias,valentin}.png` → used in TeamSpotlight carousel (Nosotros section)
-- ✅ Speaker image updated: `assets/images/speaker.jpg` → displayed in Nosotros "En mis últimas charlas" section
-- ✅ Created `index.html` entry point for Vite dev server (mirrors react.html)
-- ✅ Section spacing tightened: `.section-py` 96→64px desktop, 80→56px tablet, 64→48px mobile
-- ✅ AIFeaturesSection custom padding reduced from 140px to 96px
-- ✅ Nav: Added "Inicio" tab linking to `/` (active state via existing `home` id logic)
-- ✅ Footer redesigned: 3 columns (Servicios, Tecnologías, Navegación) + company description text
-- ✅ Nosotros CTA: Added `paddingBottom: 96` for proper spacing from footer
-
----
-
 ## Work Rules
 - Always read file before editing
 - Inline styles for layout/animation; TailwindCSS for utility classes
@@ -172,7 +150,21 @@ npm run preview      # Build + serve at :3000
 
 ---
 
-## Current Status
-✅ **PRODUCTION READY**
+## Setup & Resources (2026-04-12)
 
-All 8 sections + Nav + Footer match Minta's 1:1 layout, spacing, typography, and animations. Code is clean, well-organized, and fully documented. Project can be deployed immediately.
+**Stack confirmado:** React 18 + Vite + Tailwind 3.4 + Framer Motion + Lenis. **GSAP descartado por completo. Vercel descartado — deploy en Render.**
+
+**Sistema de diseño (fuente de verdad):** `/Users/matiassaucedo/Documents/Matias boveda/design-system/`. Antes de tocar componentes, leer `design-system/guia-ejecucion.md` (playbook práctico).
+
+**Dispatcher de modelos disponible** (subagentes globales en `~/.claude/agents/`):
+- `design-quick` (Haiku) — lookups simples, valores de tokens, "dónde está X"
+- `design-build` (Sonnet) — implementación estándar de UI
+- `design-architect` (Opus) — decisiones arquitecturales / refactors
+
+Sonnet (sesión principal) los invoca cuando matchean. Si no lo hace, decirle explícitamente: `usá design-quick para...`
+
+**Tokens del proyecto** documentados en bóveda: `design-system/tokens-por-proyecto/insights-minta.md`.
+
+**Sistema de Mockup** (project_mockup_system.md en memoria): iPhone funcionando ✅. **Próximo task:** Mac mockup interactivo, replica la arquitectura de DeviceMockup con frame PNG de MacBook (z:2 screen div, z:1 frame img).
+
+**Verificación visual:** `npx playwright screenshot http://localhost:5173/ out.png` (Playwright MCP deshabilitado por costo de tokens — usar CLI).
