@@ -9,6 +9,10 @@
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-scrolling iframe { pointer-events: none; }
 
+@keyframes iframe-loader-spin {
+  to { transform: rotate(360deg); }
+}
+
 @layer base {
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -150,14 +154,6 @@
   100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 0;
-  }
-}
-
-@media (max-width: 900px) {
-  .mockup-split {
-    grid-template-columns: 1fr !important;
-    gap: 32px !important;
-    justify-items: center;
   }
 }
 

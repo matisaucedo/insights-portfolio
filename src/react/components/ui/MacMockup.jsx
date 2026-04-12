@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import IframeLoader from "./IframeLoader";
 
 /**
  * MacMockup — reusable MacBook frame template.
@@ -64,6 +65,11 @@ export default function MacMockup({
   const resolvedMaxWidth = maxWidth ?? (maxHeight ? maxHeight * ASPECT : 720);
   const wrapperRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(false);
+  }, [src]);
 
   useEffect(() => {
     const el = wrapperRef.current;
@@ -126,6 +132,7 @@ export default function MacMockup({
               src={src}
               title="App preview"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+              onLoad={() => setLoaded(true)}
               style={{
                 width: NATIVE_WIDTH,
                 height: NATIVE_HEIGHT,
@@ -137,6 +144,7 @@ export default function MacMockup({
         ) : (
           children
         )}
+        {src && !loaded && <IframeLoader />}
       </div>
 
       {/* Device frame sits on top of the screen content. Oversized and

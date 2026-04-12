@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import IframeLoader from "./IframeLoader";
 
 /**
  * DeviceMockup — reusable iPhone 16 frame template.
@@ -39,6 +40,11 @@ export default function DeviceMockup({
 }) {
   const wrapperRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(false);
+  }, [src]);
 
   useEffect(() => {
     const el = wrapperRef.current;
@@ -105,6 +111,7 @@ export default function DeviceMockup({
               src={src}
               title="App preview"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+              onLoad={() => setLoaded(true)}
               style={{
                 width: NATIVE_WIDTH,
                 height: NATIVE_HEIGHT,
@@ -116,6 +123,7 @@ export default function DeviceMockup({
         ) : (
           children
         )}
+        {src && !loaded && <IframeLoader />}
       </div>
 
       {/* Device frame sits on top of the screen content */}

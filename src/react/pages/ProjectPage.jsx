@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { PROJECTS, WHATSAPP_URL } from "../data/projects.js";
@@ -240,10 +241,135 @@ function ProjectHero({ project, navigate, centered }) {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   MOCKUP BLOCK — split (Mac + iPhone) or single DeviceMockup
+   MOCKUP SWITCHER — segmented control (Página Web ⇄ App)
+   Animated pill slides between options via shared layoutId.
+   ══════════════════════════════════════════════════════════════════════════ */
+function MockupSwitcher({ value, onChange, options }) {
+  return (
+    <div
+      role="tablist"
+      aria-label="Vista del mockup"
+      style={{
+        position: "relative",
+        display: "inline-flex",
+        padding: 5,
+        borderRadius: 999,
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.025) 50%, rgba(255,255,255,0.05) 100%)",
+        border: "1px solid rgba(255,255,255,0.10)",
+        backdropFilter: "blur(24px) saturate(180%)",
+        WebkitBackdropFilter: "blur(24px) saturate(180%)",
+        boxShadow:
+          "0 1px 0 rgba(255,255,255,0.10) inset, 0 0 0 1px rgba(255,255,255,0.015) inset, 0 12px 40px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.35)",
+        overflow: "hidden",
+      }}
+    >
+      {/* specular top-edge highlight — liquid glass refraction */}
+      <span
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: 999,
+          pointerEvents: "none",
+          background:
+            "radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 55%)",
+          mixBlendMode: "overlay",
+          opacity: 0.9,
+        }}
+      />
+      {options.map((opt) => {
+        const active = opt.key === value;
+        return (
+          <button
+            key={opt.key}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            onClick={() => onChange(opt.key)}
+            style={{
+              position: "relative",
+              zIndex: 1,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "11px 26px",
+              minWidth: 136,
+              fontSize: 13,
+              fontWeight: 500,
+              fontFamily: "Inter, system-ui, sans-serif",
+              letterSpacing: "-0.01em",
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              color: active ? "#fff" : "rgba(255,255,255,0.48)",
+              transition: "color 0.4s cubic-bezier(0.22,1,0.36,1)",
+              WebkitTapHighlightColor: "transparent",
+            }}
+            onMouseEnter={(e) => {
+              if (!active) e.currentTarget.style.color = "rgba(255,255,255,0.78)";
+            }}
+            onMouseLeave={(e) => {
+              if (!active) e.currentTarget.style.color = "rgba(255,255,255,0.48)";
+            }}
+          >
+            {active && (
+              <motion.span
+                layoutId="mockup-switch-pill"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: 999,
+                  background:
+                    "linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 45%, rgba(255,255,255,0.02) 100%)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  boxShadow:
+                    "0 1px 0 rgba(255,255,255,0.35) inset, 0 -1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.4)",
+                  backdropFilter: "blur(16px) saturate(200%)",
+                  WebkitBackdropFilter: "blur(16px) saturate(200%)",
+                  zIndex: -1,
+                }}
+                transition={{ type: "spring", stiffness: 320, damping: 28, mass: 0.9 }}
+              />
+            )}
+            <span style={{ position: "relative" }}>{opt.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOCKUP BLOCK — split (switcher Mac ⇄ iPhone) or single DeviceMockup
    ══════════════════════════════════════════════════════════════════════════ */
 function MockupBlock({ mockup }) {
   const isSplit = mockup.device === "split";
+  const [view, setView] = useState("web");
+
+  if (!isSplit) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10% 0px" }}
+        transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
+        style={{ width: "100%", marginTop: 88 }}
+      >
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <DeviceMockup src={mockup.src} maxHeight={560} />
+        </div>
+      </motion.div>
+    );
+  }
+
+  const options = [
+    { key: "web", label: mockup.macLabel || "Página Web" },
+    { key: "app", label: mockup.iphoneLabel || "App" },
+  ];
+
+  const MAC_MAX = 540;
+  const IPHONE_MAX = 620;
 
   return (
     <motion.div
@@ -251,36 +377,82 @@ function MockupBlock({ mockup }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
-      style={{ width: "100%", marginTop: 88 }}
+      style={{
+        width: "100%",
+        marginTop: 72,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
     >
-      {isSplit ? (
-        <div
-          className="mockup-split"
+      <MockupSwitcher value={view} onChange={setView} options={options} />
+
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: 860,
+          marginTop: 40,
+          minHeight: IPHONE_MAX,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <motion.div
+          aria-hidden={view !== "web"}
+          animate={{
+            opacity: view === "web" ? 1 : 0,
+            y: view === "web" ? 0 : 14,
+            scale: view === "web" ? 1 : 0.965,
+            filter: view === "web" ? "blur(0px)" : "blur(14px)",
+          }}
+          transition={{
+            opacity: { duration: 0.6, ease: EASE },
+            y: { duration: 0.7, ease: EASE },
+            scale: { duration: 0.7, ease: EASE },
+            filter: { duration: 0.5, ease: EASE },
+          }}
           style={{
-            display: "grid",
-            gridTemplateColumns: "1.55fr 1fr",
-            gap: 40,
-            alignItems: "start",
-            width: "100%",
-            maxWidth: 1400,
-            marginLeft: "auto",
-            marginRight: "auto",
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: view === "web" ? "auto" : "none",
+            willChange: "transform, opacity, filter",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-            <MockupCaption label={mockup.macLabel || "Página Web"} />
-            <MacMockup src={mockup.macSrc} maxHeight={540} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-            <MockupCaption label={mockup.iphoneLabel || "App"} />
-            <DeviceMockup src={mockup.iphoneSrc} maxHeight={540} />
-          </div>
-        </div>
-      ) : (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <DeviceMockup src={mockup.src} maxHeight={560} />
-        </div>
-      )}
+          <MacMockup src={mockup.macSrc} maxHeight={MAC_MAX} />
+        </motion.div>
+
+        <motion.div
+          aria-hidden={view !== "app"}
+          animate={{
+            opacity: view === "app" ? 1 : 0,
+            y: view === "app" ? 0 : 14,
+            scale: view === "app" ? 1 : 0.965,
+            filter: view === "app" ? "blur(0px)" : "blur(14px)",
+          }}
+          transition={{
+            opacity: { duration: 0.6, ease: EASE },
+            y: { duration: 0.7, ease: EASE },
+            scale: { duration: 0.7, ease: EASE },
+            filter: { duration: 0.5, ease: EASE },
+          }}
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: view === "app" ? "auto" : "none",
+            willChange: "transform, opacity, filter",
+          }}
+        >
+          <DeviceMockup src={mockup.iphoneSrc} maxHeight={IPHONE_MAX} />
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
