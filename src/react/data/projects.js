@@ -10,6 +10,10 @@ export const PROJECTS = [
     desc: "Dashboard de analytics para agencias digitales. Meta Ads → Landing → Sales → Revenue. Métricas de CAC, ROAS, cash collected y llamadas en tiempo real.",
     tags: ["Meta Ads", "GoHighLevel", "Analytics"],
     img: "/assets/images/ss_clarity.jpg",
+    mockup: {
+      device: "iphone",
+      src: "https://clarity-business.onrender.com/?demo=true",
+    },
     gallery: [
       { src: "/assets/images/ss_clarity.jpg", title: "Dashboard Principal", caption: "Vista general de métricas en tiempo real" },
       { src: "/assets/images/ss_clarity.jpg", title: "Conversiones", caption: "Embudo Meta Ads → Revenue" },
