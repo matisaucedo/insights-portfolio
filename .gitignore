@@ -7,3 +7,4 @@ dist/
 .mcp.json
 *.log
 .playwright-mcp/
+.superpowers/
