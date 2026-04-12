@@ -72,7 +72,7 @@ export default function DeviceMockup({
           height: screenHeight,
           borderRadius: screenRadius,
           overflow: "hidden",
-          zIndex: 1,
+          zIndex: 2,
           background: "#000",
         }}
       >
@@ -116,7 +116,7 @@ export default function DeviceMockup({
           height: "100%",
           pointerEvents: "none",
           userSelect: "none",
-          zIndex: 2,
+          zIndex: 1,
         }}
       />
     </div>
