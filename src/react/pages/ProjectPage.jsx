@@ -67,14 +67,14 @@ function NicheLabel({ text, delay = 0.05 }) {
   );
 }
 
-function Tags({ tags, delay = 0.24 }) {
+function Tags({ tags, delay = 0.24, center = false }) {
   return (
     <motion.div
       custom={delay}
       variants={fadeUp}
       initial="hidden"
       animate="visible"
-      style={{ display: "flex", gap: 6, flexWrap: "wrap" }}
+      style={{ display: "flex", gap: 6, flexWrap: "wrap", ...(center && { justifyContent: "center" }) }}
     >
       {tags.map((t) => (
         <span
@@ -215,7 +215,7 @@ function MockupLayout({ project, navigate }) {
         </motion.p>
 
         {/* Tags */}
-        <Tags tags={project.tags} delay={0.22} />
+        <Tags tags={project.tags} delay={0.22} center />
 
         {/* Divider */}
         <motion.div
