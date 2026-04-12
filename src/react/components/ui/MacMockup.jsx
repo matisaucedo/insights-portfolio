@@ -16,10 +16,12 @@ const LAPTOP_H = 1607;
 
 const ASPECT = LAPTOP_W / LAPTOP_H; // ≈ 1.4971
 
-// Logical viewport the embedded site renders at — matches the screen-area
-// aspect sampled from mac screen.png (≈1.5458).
-const NATIVE_WIDTH  = 1440;
-const NATIVE_HEIGHT = 932;
+// Logical viewport the embedded site renders at. Kept at the 1.5458 screen
+// aspect but smaller than a full desktop width so the uniform scale-up
+// magnifies UI elements and the embedded site reads as a Mac, not a
+// cramped-desktop-in-a-phone. Still well above Clarity's desktop breakpoint.
+const NATIVE_WIDTH  = 1280;
+const NATIVE_HEIGHT = 828;
 
 // Screen-area insets relative to the laptop bbox (NOT the full frame),
 // derived by alpha-bbox sampling mac screen.png then shifted into bbox coords.

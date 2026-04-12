@@ -251,17 +251,20 @@ function MockupLayout({ project, navigate }) {
                 display: "grid",
                 gridTemplateColumns: "1.55fr 1fr",
                 gap: 40,
-                alignItems: "end",
-                width: "100%",
+                alignItems: "start",
+                width: "calc(100vw - 80px)",
+                marginLeft: "calc(50% - 50vw + 40px)",
+                marginRight: "calc(50% - 50vw + 40px)",
+                maxWidth: 1400,
               }}
             >
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
                 <SectionDivider label="Pagina Web" delay={0.26} />
-                <MacMockup src={project.mockup.macSrc} maxHeight={600} />
+                <MacMockup src={project.mockup.macSrc} maxHeight={540} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
                 <SectionDivider label="App" delay={0.28} />
-                <DeviceMockup src={project.mockup.iphoneSrc} maxHeight={500} />
+                <DeviceMockup src={project.mockup.iphoneSrc} maxHeight={540} />
               </div>
             </div>
           ) : (
