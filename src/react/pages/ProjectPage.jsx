@@ -151,80 +151,99 @@ function GalleryDivider({ delay = 0.3 }) {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   MOCKUP LAYOUT — split: gallery left, device mockup right
+   MOCKUP LAYOUT — centered single column, device mockup as hero
    ══════════════════════════════════════════════════════════════════════════ */
 function MockupLayout({ project, navigate }) {
   return (
     <div style={{ paddingTop: 80, minHeight: "100vh", paddingBottom: 120, background: "#000" }}>
-      <div className="container-minta" style={{ paddingTop: 48, maxWidth: 1280 }}>
+      <div className="container-minta" style={{ paddingTop: 48, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
         <BackButton navigate={navigate} />
 
-        {/* Header: title left, description right */}
-        <div
-          className="project-header-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, marginBottom: 64, alignItems: "end" }}
+        {/* Niche label */}
+        <NicheLabel text={project.nl} />
+
+        {/* Title */}
+        <motion.h1
+          custom={0.1}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          style={{
+            fontSize: "clamp(32px, 5vw, 62px)",
+            fontWeight: 400,
+            letterSpacing: "-0.04em",
+            lineHeight: "1.0em",
+            color: "#fff",
+            marginBottom: 16,
+          }}
         >
-          <div>
-            <NicheLabel text={project.nl} />
-            <motion.h1
-              custom={0.1}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              style={{ fontSize: "clamp(32px, 5vw, 62px)", fontWeight: 400, letterSpacing: "-0.04em", lineHeight: "1.0em", color: "#fff", marginBottom: 20 }}
-            >
-              {project.title}
-            </motion.h1>
-            <Tags tags={project.tags} />
-          </div>
+          {project.title}
+        </motion.h1>
 
-          <div>
-            <motion.p
-              custom={0.12}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.55)", letterSpacing: "-0.01em", marginBottom: 12 }}
-            >
-              {project.sub}
-            </motion.p>
-            <motion.p
-              custom={0.18}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              style={{ fontSize: 15, color: "rgba(255,255,255,0.38)", lineHeight: "1.65em", maxWidth: 480 }}
-            >
-              {project.desc}
-            </motion.p>
-          </div>
-        </div>
-
-        {/* Split: gallery + mockup */}
-        <div
-          className="project-split-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}
+        {/* Subtitle */}
+        <motion.p
+          custom={0.12}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          style={{
+            fontSize: 15,
+            fontWeight: 500,
+            color: "rgba(255,255,255,0.40)",
+            letterSpacing: "-0.01em",
+            marginBottom: 16,
+          }}
         >
-          {/* Left — Gallery */}
-          <div>
-            <GalleryDivider delay={0.25} />
-            <Gallery images={project.gallery} variant="tall" />
-          </div>
+          {project.sub}
+        </motion.p>
 
-          {/* Right — Device Mockup (sticky) */}
-          <motion.div
-            custom={0.3}
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            style={{ position: "sticky", top: 100 }}
-          >
-            <DeviceMockup src={project.mockup.src} maxHeight={640} />
-          </motion.div>
-        </div>
+        {/* Description */}
+        <motion.p
+          custom={0.18}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          style={{
+            fontSize: 15,
+            color: "rgba(255,255,255,0.32)",
+            lineHeight: "1.65em",
+            maxWidth: 480,
+            marginBottom: 20,
+          }}
+        >
+          {project.desc}
+        </motion.p>
+
+        {/* Tags */}
+        <Tags tags={project.tags} delay={0.22} />
+
+        {/* Divider */}
+        <motion.div
+          custom={0.26}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          style={{
+            width: "100%",
+            height: 1,
+            background: "rgba(255,255,255,0.07)",
+            margin: "40px 0",
+          }}
+        />
+
+        {/* Device Mockup */}
+        <motion.div
+          custom={0.3}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          style={{ width: "100%" }}
+        >
+          <DeviceMockup src={project.mockup.src} maxHeight={380} />
+        </motion.div>
 
         {/* CTA */}
-        <div style={{ marginTop: 64, borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 48, display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ marginTop: 56 }}>
           <CtaButton />
         </div>
       </div>
