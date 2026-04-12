@@ -23,7 +23,17 @@ export default function Gallery({ images = [] }) {
         return (
           <div
             key={i}
+            role="button"
+            tabIndex={0}
+            aria-label={image.title || `Imagen ${i + 1}`}
+            aria-pressed={isActive}
             onMouseEnter={() => setActiveIdx(i)}
+            onFocus={() => setActiveIdx(i)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveIdx(i); }
+              if (e.key === "ArrowRight") setActiveIdx(prev => Math.min(prev + 1, images.length - 1));
+              if (e.key === "ArrowLeft") setActiveIdx(prev => Math.max(prev - 1, 0));
+            }}
             style={{
               position: "relative",
               width: isActive ? "50%" : "8%",

@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import IframeLoader from "./IframeLoader";
 
 /**
@@ -144,7 +145,9 @@ export default function MacMockup({
         ) : (
           children
         )}
-        {src && !loaded && <IframeLoader />}
+        <AnimatePresence>
+          {src && !loaded && <IframeLoader key="loader" />}
+        </AnimatePresence>
       </div>
 
       {/* Device frame sits on top of the screen content. Oversized and

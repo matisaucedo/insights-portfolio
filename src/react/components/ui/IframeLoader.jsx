@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 /**
  * IframeLoader — pill-shaped loading indicator shown over a mockup screen
  * while its <iframe> is loading. Absolutely positioned, centers itself
@@ -5,7 +7,11 @@
  */
 export default function IframeLoader({ label = "Loading..." }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
       aria-hidden="true"
       style={{
         position: "absolute",
@@ -60,6 +66,6 @@ export default function IframeLoader({ label = "Loading..." }) {
         </svg>
         <span>{label}</span>
       </div>
-    </div>
+    </motion.div>
   );
 }

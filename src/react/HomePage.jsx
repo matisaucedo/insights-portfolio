@@ -329,13 +329,20 @@ export function ProyectosScreen() {
   const activeLabel = NICHES.find(n => n.key === activeFilter)?.label || "Todos";
 
   useEffect(() => {
-    function handler(e) {
+    function mouseHandler(e) {
       if (dropRef.current && !dropRef.current.contains(e.target)) {
         setFilterOpen(false);
       }
     }
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    function keyHandler(e) {
+      if (e.key === "Escape") setFilterOpen(false);
+    }
+    document.addEventListener("mousedown", mouseHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => {
+      document.removeEventListener("mousedown", mouseHandler);
+      document.removeEventListener("keydown", keyHandler);
+    };
   }, []);
 
   return (
@@ -533,9 +540,11 @@ export function ProyectosScreen() {
           style={{ display: "flex", flexDirection: "column", gap: 2 }}
           layout
         >
-          {filtered.map((p, i) => (
-            <ProjectRow key={p.id} project={p} index={i} />
-          ))}
+          <AnimatePresence mode="popLayout">
+            {filtered.map((p, i) => (
+              <ProjectRow key={p.id} project={p} index={i} />
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
       <Footer />
@@ -552,6 +561,7 @@ function ProjectRow({ project, index }) {
       layout
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8, transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}
       whileHover={!locked ? { y: -3 } : {}}
       transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.05 }}
       onMouseEnter={() => !locked && setHovered(true)}
