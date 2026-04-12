@@ -11,8 +11,9 @@ export const PROJECTS = [
     tags: ["Meta Ads", "GoHighLevel", "Analytics"],
     img: "/assets/images/ss_clarity.jpg",
     mockup: {
-      device: "iphone",
-      src: "https://clarity-business.onrender.com/?demo=true",
+      device: "split",
+      macSrc: "https://clarity-business.onrender.com/?demo=true",
+      iphoneSrc: "https://clarity-business.onrender.com/?demo=true",
     },
     gallery: [
       { src: "/assets/images/ss_clarity.jpg", title: "Dashboard Principal", caption: "Vista general de métricas en tiempo real" },

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { PROJECTS, WHATSAPP_URL } from "../data/projects.js";
 import Gallery from "../components/ui/Gallery.jsx";
 import DeviceMockup from "../components/ui/DeviceMockup.jsx";
+import MacMockup from "../components/ui/MacMockup.jsx";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -239,7 +240,23 @@ function MockupLayout({ project, navigate }) {
           animate="visible"
           style={{ width: "100%" }}
         >
-          <DeviceMockup src={project.mockup.src} maxHeight={380} />
+          {project.mockup.device === "split" ? (
+            <div
+              className="mockup-split"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1.35fr 1fr",
+                gap: 48,
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <MacMockup src={project.mockup.macSrc} maxWidth={720} />
+              <DeviceMockup src={project.mockup.iphoneSrc} maxHeight={520} />
+            </div>
+          ) : (
+            <DeviceMockup src={project.mockup.src} maxHeight={380} />
+          )}
         </motion.div>
 
         {/* CTA */}

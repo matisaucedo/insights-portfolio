@@ -125,6 +125,14 @@
   }
 }
 
+@media (max-width: 900px) {
+  .mockup-split {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    justify-items: center;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pulsing-orb-ring {
     animation: none !important;
