@@ -1,5 +1,20 @@
 import { useRef, useState, useEffect } from "react";
 
+/**
+ * MacMockup — reusable MacBook frame template.
+ *
+ * Props:
+ *   src?:        string — iframe URL rendered inside the screen area
+ *   children?:   ReactNode — fallback content (used when no `src`)
+ *   maxHeight?:  number — caps the rendered height (maxWidth is derived via aspect)
+ *   maxWidth?:   number — caps width directly (overrides maxHeight derivation)
+ *   className?:  string
+ *
+ * Z-index rule: the frame PNG has an opaque screen region, so the iframe
+ * container sits at z:2 (above the frame) while the frame <img> stays at
+ * z:1 (below). Do not invert this — it breaks transparency and clipping.
+ */
+
 const FRAME_SRC = "/assets/mockup/mac marco.png";
 
 // The PNG is 4500×3000 but the visible laptop only occupies a 2406×1607 bbox

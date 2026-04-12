@@ -1,5 +1,19 @@
 import { useRef, useState, useEffect } from "react";
 
+/**
+ * DeviceMockup — reusable iPhone 16 frame template.
+ *
+ * Props:
+ *   src?:        string — iframe URL rendered inside the phone screen
+ *   children?:   ReactNode — fallback content when no `src`
+ *   maxHeight?:  number (default 680) — caps rendered height; width derives from aspect
+ *   className?:  string
+ *
+ * Z-index rule: the frame PNG has an opaque screen region, so the iframe
+ * container sits at z:2 (above) while the frame <img> stays at z:1 (below).
+ * Do not invert this — it breaks transparency and clipping.
+ */
+
 const FRAME_SRC = "/assets/mockup/marcos.png";
 const ASPECT = 1288 / 2614; // width / height — matches frame image
 

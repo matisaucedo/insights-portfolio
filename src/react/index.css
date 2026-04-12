@@ -99,6 +99,34 @@
     .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   }
 
+  /* Project detail page — extra top padding so fixed nav doesn't overlap hero */
+  .project-hero-pad { padding-top: 160px; padding-bottom: 140px; }
+  @media (max-width: 1199px) {
+    .project-hero-pad { padding-top: 140px; padding-bottom: 120px; }
+  }
+  @media (max-width: 809px) {
+    .project-hero-pad { padding-top: 112px; padding-bottom: 96px; }
+  }
+
+  /* Project footer grid — desc + CTA side by side, collapses on mobile */
+  .project-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: end;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 48px;
+    margin-top: 64px;
+  }
+  @media (max-width: 809px) {
+    .project-footer-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 48px;
+      padding-top: 32px;
+    }
+  }
+
   /* GPU-accelerated layer */
   .gpu-layer {
     will-change: transform, opacity;

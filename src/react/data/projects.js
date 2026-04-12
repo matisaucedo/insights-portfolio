@@ -1,5 +1,35 @@
 export const WHATSAPP_URL = "https://wa.me/5491112345678";
 
+/**
+ * Project schema — consumed by the ProjectPage template (pages/ProjectPage.jsx).
+ *
+ * {
+ *   id:        string (route segment — /proyectos/:id)
+ *   niche:     string (category tag, used by ProyectosScreen filters)
+ *   nl:        string (niche label shown above the title, e.g. "Analytics · SaaS")
+ *   title:     string (hero H1)
+ *   sub:       string (short subtitle under the title)
+ *   desc:      string (paragraph description)
+ *   tags:      string[] (pill chips)
+ *   img:       string (thumbnail used in the projects grid)
+ *
+ *   // Optional — if present, ProjectPage renders MockupLayout (centered hero + mockup).
+ *   mockup?: {
+ *     device:      "split" | undefined       // "split" = Mac + iPhone side by side
+ *     src?:        string                    // single-device iframe URL
+ *     macSrc?:     string                    // split layout — Mac iframe URL
+ *     iphoneSrc?:  string                    // split layout — iPhone iframe URL
+ *     macLabel?:   string                    // caption above Mac mockup (default "Página Web")
+ *     iphoneLabel?: string                   // caption above iPhone mockup (default "App")
+ *   }
+ *
+ *   // Optional — if no `mockup`, ProjectPage renders DefaultLayout (gallery + footer CTA).
+ *   gallery?: { src: string, title: string, caption: string }[]
+ * }
+ *
+ * To add a new project: push an object matching this schema. ProjectPage
+ * routes and layout selection are automatic — no code changes required.
+ */
 export const PROJECTS = [
   {
     id: "clarity",
