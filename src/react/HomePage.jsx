@@ -86,6 +86,9 @@ export function Nav() {
             style={{
               textDecoration: "none",
               padding: "6px 14px",
+              minHeight: 44,
+              display: "inline-flex",
+              alignItems: "center",
               borderRadius: 8,
               fontSize: 13.5,
               fontWeight: 400,

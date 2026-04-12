@@ -74,16 +74,10 @@ export default function MobileApp() {
         </div>
 
         {/* Split layout — Minta exact: flexbox, phone cropped bottom with CSS mask */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 48,
-            alignItems: "center",
-          }}
-        >
+        <div className="mobile-app-layout" style={{ display: "flex", flexDirection: "row", gap: 48, alignItems: "center" }}>
           {/* LEFT: Phone mockup — height 440px clips bottom, CSS mask fades bottom */}
           <motion.div
+            className="mobile-app-phone"
             initial={{ opacity: 0, y: 48 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

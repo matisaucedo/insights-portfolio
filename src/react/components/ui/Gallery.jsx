@@ -13,7 +13,7 @@ export default function Gallery({ images = [] }) {
         flexDirection: "row",
         gap: "4px",
         width: "100%",
-        height: "400px",
+        height: "clamp(220px, 55vw, 400px)",
         alignItems: "center",
         justifyContent: "center",
       }}
