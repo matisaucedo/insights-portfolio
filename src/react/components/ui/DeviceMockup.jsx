@@ -13,7 +13,7 @@ const NATIVE_HEIGHT = 844;
 const SCREEN_LEFT   = 0.0559;
 const SCREEN_TOP    = 0.0298;
 const SCREEN_RIGHT  = 0.0668;
-const SCREEN_BOTTOM = 0.0275;
+
 
 export default function DeviceMockup({
   src,
@@ -22,7 +22,7 @@ export default function DeviceMockup({
   className = "",
 }) {
   const wrapperRef = useRef(null);
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const [containerWidth, setContainerWidth] = useState(0);
 
   useEffect(() => {
@@ -40,8 +40,6 @@ export default function DeviceMockup({
   const screenLeft   = containerWidth * SCREEN_LEFT;
   const screenTop    = containerHeight * SCREEN_TOP;
   const screenWidth  = containerWidth * (1 - SCREEN_LEFT - SCREEN_RIGHT);
-  const screenHeight = containerHeight * (1 - SCREEN_TOP - SCREEN_BOTTOM);
-
   // Scale the 390px app to fit exactly within the visible screen area
   const scale = screenWidth > 0 ? screenWidth / NATIVE_WIDTH : 1;
 
