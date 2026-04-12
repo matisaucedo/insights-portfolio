@@ -1,29 +1,50 @@
 import { useRef, useState, useEffect } from "react";
 
 const FRAME_SRC = "/assets/mockup/mac marco.png";
-const ASPECT = 4500 / 3000; // width / height — matches frame image
 
-// Logical viewport the embedded site renders at. Chosen so (width / height)
-// equals the screen-area aspect sampled from mac screen.png (≈1.5458).
+// The PNG is 4500×3000 but the visible laptop only occupies a 2406×1607 bbox
+// inside it (the rest is transparent padding). We size the mockup container
+// to the tight laptop bbox so `maxHeight` is visually comparable to the
+// iPhone mockup, then oversize the frame <img> and offset it so the laptop
+// lands exactly inside the container.
+const FRAME_W = 4500;
+const FRAME_H = 3000;
+const LAPTOP_X = 1041;
+const LAPTOP_Y = 702;
+const LAPTOP_W = 2406;
+const LAPTOP_H = 1607;
+
+const ASPECT = LAPTOP_W / LAPTOP_H; // ≈ 1.4971
+
+// Logical viewport the embedded site renders at — matches the screen-area
+// aspect sampled from mac screen.png (≈1.5458).
 const NATIVE_WIDTH  = 1440;
 const NATIVE_HEIGHT = 932;
 
-// Screen area insets relative to the full frame image (4500×3000).
-// Derived by alpha-bbox sampling mac screen.png.
-const SCREEN_LEFT   = 0.272;
-const SCREEN_TOP    = 0.244;
-const SCREEN_RIGHT  = 0.27422;
-const SCREEN_BOTTOM = 0.31567;
+// Screen-area insets relative to the laptop bbox (NOT the full frame),
+// derived by alpha-bbox sampling mac screen.png then shifted into bbox coords.
+const SCREEN_LEFT   = 0.07606;
+const SCREEN_TOP    = 0.01867;
+const SCREEN_RIGHT  = 0.07523;
+const SCREEN_BOTTOM = 0.15931;
 
 // MacBook display corners are nearly square — keep radius minimal.
 const SCREEN_RADIUS_RATIO = 0.006;
 
+// Frame <img> size and offset expressed as fractions of the laptop bbox.
+const FRAME_IMG_SCALE_X = FRAME_W / LAPTOP_W;
+const FRAME_IMG_SCALE_Y = FRAME_H / LAPTOP_H;
+const FRAME_IMG_OFFSET_X = -LAPTOP_X / LAPTOP_W;
+const FRAME_IMG_OFFSET_Y = -LAPTOP_Y / LAPTOP_H;
+
 export default function MacMockup({
   src,
   children,
-  maxWidth = 720,
+  maxWidth,
+  maxHeight,
   className = "",
 }) {
+  const resolvedMaxWidth = maxWidth ?? (maxHeight ? maxHeight * ASPECT : 720);
   const wrapperRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -54,8 +75,8 @@ export default function MacMockup({
       style={{
         position: "relative",
         width: "100%",
-        maxWidth,
-        aspectRatio: `4500 / 3000`,
+        maxWidth: resolvedMaxWidth,
+        aspectRatio: `${LAPTOP_W} / ${LAPTOP_H}`,
         margin: "0 auto",
       }}
     >
@@ -101,16 +122,19 @@ export default function MacMockup({
         )}
       </div>
 
-      {/* Device frame sits on top of the screen content */}
+      {/* Device frame sits on top of the screen content. Oversized and
+          offset so the laptop bbox inside the PNG aligns with this container. */}
       <img
         src={FRAME_SRC}
         alt=""
         draggable={false}
         style={{
           position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
+          left: `${FRAME_IMG_OFFSET_X * 100}%`,
+          top: `${FRAME_IMG_OFFSET_Y * 100}%`,
+          width: `${FRAME_IMG_SCALE_X * 100}%`,
+          height: `${FRAME_IMG_SCALE_Y * 100}%`,
+          maxWidth: "none",
           pointerEvents: "none",
           userSelect: "none",
           zIndex: 1,

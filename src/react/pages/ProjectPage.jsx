@@ -245,13 +245,13 @@ function MockupLayout({ project, navigate }) {
               className="mockup-split"
               style={{
                 display: "grid",
-                gridTemplateColumns: "1.35fr 1fr",
-                gap: 48,
+                gridTemplateColumns: "1.5fr 1fr",
+                gap: 32,
                 alignItems: "center",
                 width: "100%",
               }}
             >
-              <MacMockup src={project.mockup.macSrc} maxWidth={720} />
+              <MacMockup src={project.mockup.macSrc} maxHeight={520} />
               <DeviceMockup src={project.mockup.iphoneSrc} maxHeight={520} />
             </div>
           ) : (
