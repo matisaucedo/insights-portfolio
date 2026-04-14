@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", "Inter Display", "system-ui", "sans-serif"],
+        display: ["'Bricolage Grotesque'", "Inter", "system-ui", "sans-serif"],
       },
       colors: {
         /* ── exact tokens from reference ── */

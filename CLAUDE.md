@@ -150,7 +150,7 @@ npm run preview      # Build + serve at :3000
 ---
 
 ## Work Rules
-- Always read file before editing
+- Always read file before editing                                                     
 - Inline styles for layout/animation; TailwindCSS for utility classes
 - Use Framer Motion `whileInView` with `viewport={{ once: true }}`
 - All animations trigger on scroll (headless screenshots won't show them)

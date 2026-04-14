@@ -17,7 +17,7 @@ const CARDS = [
     visualColor: "rgba(232,93,47,0.08)",
     glowColor: "rgba(232,93,47,0.30)",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="2" y="3" width="20" height="14" rx="2"/>
         <path d="M8 21h8M12 17v4"/>
       </svg>
@@ -27,9 +27,9 @@ const CARDS = [
   },
   {
     visualColor: "rgba(255,255,255,0.03)",
-    glowColor: "rgba(120,120,255,0.22)",
+    glowColor: "rgba(250,128,57,0.10)",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M4 6h16M4 12h16M4 18h7"/>
         <circle cx="17" cy="18" r="3"/>
         <path d="M17 15v3l2 1"/>
@@ -42,7 +42,7 @@ const CARDS = [
     visualColor: "rgba(232,93,47,0.05)",
     glowColor: "rgba(232,93,47,0.24)",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
       </svg>
     ),
@@ -139,6 +139,7 @@ export default function FeatureTrio() {
               color: "#fff",
               maxWidth: 520,
               marginBottom: 16,
+              fontFamily: "var(--font-display)",
             }}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -209,14 +210,6 @@ export default function FeatureTrio() {
         </motion.div>
       </Container>
 
-      {/* Responsive: stack on mobile */}
-      <style>{`
-        @media (max-width: 809px) {
-          .feat-trio-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </Section>
   );
 }

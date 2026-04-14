@@ -39,7 +39,7 @@ const FEATURES = [
   {
     icon: <BellIcon />,
     title: "Apps listas para crecer",
-    desc: "Cada aplicación está optimizada para escalar desde el día uno, sin fricciones.",
+    desc: "Arquitectura lista para crecer: de 10 usuarios a 10.000 sin reescribir una línea.",
   },
   {
     icon: <KeyIcon />,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -309,8 +309,8 @@ function MockupSwitcher({ value, onChange, options }) {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: "10px 24px",
-              minWidth: 136,
+              padding: "8px 16px",
+              minWidth: 100,
               fontSize: 13,
               fontWeight: 500,
               fontFamily: "Inter, system-ui, sans-serif",
@@ -359,9 +359,22 @@ function MockupSwitcher({ value, onChange, options }) {
 /* ══════════════════════════════════════════════════════════════════════════
    MOCKUP BLOCK — split (switcher Mac ⇄ iPhone) or single DeviceMockup
    ══════════════════════════════════════════════════════════════════════════ */
+function useContainerWidth() {
+  const ref = useRef(null);
+  const [width, setWidth] = useState(860);
+  useEffect(() => {
+    if (!ref.current) return;
+    const obs = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return [ref, width];
+}
+
 function MockupBlock({ mockup }) {
   const isSplit = mockup.device === "split";
   const [view, setView] = useState("web");
+  const [containerRef, containerWidth] = useContainerWidth();
 
   if (!isSplit) {
     return (
@@ -370,7 +383,7 @@ function MockupBlock({ mockup }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-10% 0px" }}
         transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
-        style={{ width: "100%", marginTop: 88 }}
+        style={{ width: "100%", marginTop: "clamp(40px, 8vw, 88px)" }}
       >
         <div style={{ display: "flex", justifyContent: "center" }}>
           <DeviceMockup src={mockup.src} maxHeight={560} />
@@ -384,8 +397,8 @@ function MockupBlock({ mockup }) {
     { key: "app", label: mockup.iphoneLabel || "App" },
   ];
 
-  const MAC_MAX = 540;
-  const IPHONE_MAX = 620;
+  const MAC_MAX = Math.min(540, containerWidth * 0.62);
+  const IPHONE_MAX = Math.min(620, containerWidth * 0.85);
 
   return (
     <motion.div
@@ -404,12 +417,14 @@ function MockupBlock({ mockup }) {
       <MockupSwitcher value={view} onChange={setView} options={options} />
 
       <div
+        ref={containerRef}
         style={{
           position: "relative",
           width: "100%",
-          maxWidth: 860,
+          maxWidth: "min(860px, 100%)",
           marginTop: 40,
           minHeight: IPHONE_MAX,
+          overflow: "hidden",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

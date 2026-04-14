@@ -25,6 +25,7 @@ export default function SectionLabel({ children, center = false }) {
     >
       {/* Arrow — exact Minta decorative prefix */}
       <svg
+        aria-hidden="true"
         width="10"
         height="10"
         viewBox="0 0 10 10"

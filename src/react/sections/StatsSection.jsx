@@ -6,8 +6,8 @@ import Container from "../components/ui/Container.jsx";
 const STATS = [
   { value: 100, prefix: "+", suffix: "", label: "Proyectos entregados" },
   { value: 12,  prefix: "+", suffix: "", label: "Sectores distintos" },
-  { value: 4,   prefix: "",  suffix: "", label: "Personas en el equipo" },
-  { value: 3,   prefix: "+", suffix: "", label: "Años de experiencia" },
+  { value: 4,   prefix: "",  suffix: "", label: "Especialistas dedicados" },
+  { value: 3,   prefix: "+", suffix: "", label: "Años en el mercado" },
 ];
 
 /* Easing helper — ease out cubic */
@@ -93,6 +93,7 @@ export default function StatsSection() {
         >
           <h2
             style={{
+              fontFamily: "var(--font-display)",
               fontSize: "clamp(24px, 3vw, 36px)",
               fontWeight: 400,
               letterSpacing: "-0.04em",

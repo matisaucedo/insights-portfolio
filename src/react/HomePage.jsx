@@ -18,9 +18,9 @@ import { PROJECTS, NICHES, WHATSAPP_URL } from "./data/projects.js";
 const TEAM = [
   { key: "fede", name: "Federico", role: "Co-Fundador · CEO", desc: "Lidera la visión del producto y el desarrollo. Experto en IA aplicada al software.", img: "/assets/images/team/federico.png" },
   { key: "juan", name: "Juan", role: "Co-Fundador · Comercial", desc: "Gestiona relaciones con clientes y cierra acuerdos. Cara comercial de Insights.", img: "/assets/images/team/juan.png" },
-  { key: "matias", name: "Matías", role: "VISUAL · IA", desc: "Frontend development, edición de video y dirección visual. Potencia cada workflow creativo con IA.", img: "/assets/images/team/matias.png" },
+  { key: "matias", name: "Matías", role: "Visual · IA", desc: "Frontend development, edición de video y dirección visual. Potencia cada workflow creativo con IA.", img: "/assets/images/team/matias.png" },
   { key: "toledo", name: "Valentín", role: "Desarrollo · IA", desc: "Programador e implementador de todos los productos. Especialista en automatización con IA.", img: "/assets/images/team/valentin.png" },
-  { key: "facu", name: "Facundo", role: "Desarrollo Full Stack", desc: "Desarrollador full stack con foco en arquitectura escalable e integración de APIs.", img: "/assets/images/team/facu.png" },
+  { key: "facu", name: "Facundo", role: "Full Stack · Backend", desc: "Desarrollador full stack con foco en arquitectura escalable e integración de APIs.", img: "/assets/images/team/facu.png" },
 ];
 
 const TESTIMONIALS = [
@@ -43,11 +43,47 @@ const PROC_STEPS = [
 export function Nav() {
   const location = useLocation();
   const active = location.pathname.split("/")[1] || "home";
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const drawerRef = useRef(null);
   const links = [
     { id: "home", label: "Inicio", path: "/" },
     { id: "proyectos", label: "Proyectos", path: "/proyectos" },
     { id: "nosotros", label: "Nosotros", path: "/nosotros" },
   ];
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === "Escape") setDrawerOpen(false); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
+
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const drawer = drawerRef.current;
+    if (!drawer) return;
+    const focusable = drawer.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    first?.focus();
+    const handleKeyDown = (e) => {
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last?.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first?.focus(); }
+      }
+    };
+    drawer.addEventListener('keydown', handleKeyDown);
+    return () => drawer.removeEventListener('keydown', handleKeyDown);
+  }, [drawerOpen]);
+
+  const burgerVariants = {
+    closed: {},
+    open: {},
+  };
+  const line1Variants = { closed: { rotate: 0, y: 0 }, open: { rotate: 45, y: 7 } };
+  const line2Variants = { closed: { opacity: 1 }, open: { opacity: 0 } };
+  const line3Variants = { closed: { rotate: 0, y: 0 }, open: { rotate: -45, y: -7 } };
 
   return (
     <header
@@ -78,45 +114,49 @@ export function Nav() {
         />
       </Link>
 
-      {/* Center links */}
-      <nav style={{ display: "flex", alignItems: "center", gap: 4 }}>
-        {links.map(({ id, label, path }) => (
-          <Link
-            key={id}
-            to={path}
-            style={{
-              textDecoration: "none",
-              padding: "6px 14px",
-              minHeight: 44,
-              display: "inline-flex",
-              alignItems: "center",
-              borderRadius: 8,
-              fontSize: 13.5,
-              fontWeight: 400,
-              color: active === id ? "#fff" : "rgba(255,255,255,0.46)",
-              cursor: "pointer",
-              transition: "color 0.2s, background 0.2s",
-              letterSpacing: "-0.005em",
-              fontFamily: "Inter, system-ui, sans-serif",
-              background: active === id ? "rgba(255,255,255,0.06)" : "transparent",
-            }}
-            onMouseEnter={e => {
-              if (active !== id) e.currentTarget.style.color = "rgba(255,255,255,0.80)";
-            }}
-            onMouseLeave={e => {
-              if (active !== id) e.currentTarget.style.color = "rgba(255,255,255,0.46)";
-            }}
-          >
-            {label}
-          </Link>
-        ))}
-      </nav>
+      {/* Center links — hidden on mobile via .nav-desktop-links */}
+      <div className="nav-desktop-links">
+        <nav style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          {links.map(({ id, label, path }) => (
+            <Link
+              key={id}
+              to={path}
+              aria-current={active === id ? "page" : undefined}
+              style={{
+                textDecoration: "none",
+                padding: "6px 14px",
+                minHeight: 44,
+                display: "inline-flex",
+                alignItems: "center",
+                borderRadius: 8,
+                fontSize: 13.5,
+                fontWeight: 400,
+                color: active === id ? "#fff" : "rgba(255,255,255,0.46)",
+                cursor: "pointer",
+                transition: "color 0.2s, background 0.2s",
+                letterSpacing: "-0.005em",
+                fontFamily: "Inter, system-ui, sans-serif",
+                background: active === id ? "rgba(255,255,255,0.06)" : "transparent",
+              }}
+              onMouseEnter={e => {
+                if (active !== id) e.currentTarget.style.color = "rgba(255,255,255,0.80)";
+              }}
+              onMouseLeave={e => {
+                if (active !== id) e.currentTarget.style.color = "rgba(255,255,255,0.46)";
+              }}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+      </div>
 
-      {/* CTA pill */}
+      {/* CTA pill — desktop */}
       <motion.a
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
+        className="nav-desktop-links"
         style={{
           fontSize: 13,
           fontWeight: 500,
@@ -138,6 +178,151 @@ export function Nav() {
       >
         Hablar con el equipo
       </motion.a>
+
+      {/* Hamburger button — mobile only */}
+      <motion.button
+        className="nav-hamburger-btn"
+        onClick={() => setDrawerOpen(v => !v)}
+        animate={drawerOpen ? "open" : "closed"}
+        variants={burgerVariants}
+        aria-label={drawerOpen ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={drawerOpen}
+        style={{
+          display: "none",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          padding: 8,
+          width: 40,
+          height: 40,
+          color: "#fff",
+          flexDirection: "column",
+          gap: 5,
+        }}
+      >
+        <motion.span variants={line1Variants} transition={{ duration: 0.22 }} style={{ width: 22, height: 1.5, background: "#fff", borderRadius: 2, transformOrigin: "center", display: "block" }} />
+        <motion.span variants={line2Variants} transition={{ duration: 0.22 }} style={{ width: 22, height: 1.5, background: "#fff", borderRadius: 2, transformOrigin: "center", display: "block" }} />
+        <motion.span variants={line3Variants} transition={{ duration: 0.22 }} style={{ width: 22, height: 1.5, background: "#fff", borderRadius: 2, transformOrigin: "center", display: "block" }} />
+      </motion.button>
+
+      {/* Drawer overlay + panel */}
+      <AnimatePresence>
+        {drawerOpen && (
+          <>
+            <motion.div
+              key="overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setDrawerOpen(false)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: "rgba(0,0,0,0.5)",
+                zIndex: 99,
+              }}
+            />
+            <motion.div
+              key="drawer"
+              ref={drawerRef}
+              role="dialog"
+              aria-modal="true"
+              initial={{ x: 220 }}
+              animate={{ x: 0 }}
+              exit={{ x: 220 }}
+              transition={{ type: "spring", stiffness: 300, damping: 28 }}
+              style={{
+                position: "fixed",
+                top: 0,
+                right: 0,
+                height: "100vh",
+                width: 220,
+                background: "#0d0d0d",
+                borderLeft: "1px solid rgba(255,255,255,0.08)",
+                padding: "24px 20px",
+                zIndex: 101,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setDrawerOpen(false)}
+                aria-label="Cerrar menú"
+                style={{
+                  alignSelf: "flex-end",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "rgba(255,255,255,0.5)",
+                  fontSize: 22,
+                  lineHeight: 1,
+                  padding: "4px 2px",
+                  marginBottom: 24,
+                  fontFamily: "Inter, system-ui, sans-serif",
+                }}
+              >
+                ×
+              </button>
+
+              {/* Nav links */}
+              <nav style={{ display: "flex", flexDirection: "column" }}>
+                {links.map(({ id, label, path }) => (
+                  <Link
+                    key={id}
+                    to={path}
+                    aria-current={active === id ? "page" : undefined}
+                    onClick={() => setDrawerOpen(false)}
+                    style={{
+                      display: "block",
+                      padding: "14px 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      fontSize: 14,
+                      color: active === id ? "#fff" : "rgba(255,255,255,0.75)",
+                      textDecoration: "none",
+                      fontFamily: "Inter, system-ui, sans-serif",
+                      letterSpacing: "-0.005em",
+                    }}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </nav>
+
+              {/* CTA button */}
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setDrawerOpen(false)}
+                style={{
+                  marginTop: "auto",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "#fff",
+                  padding: "0 18px",
+                  height: 40,
+                  borderRadius: 999,
+                  background: "rgba(255,255,255,0.09)",
+                  border: "1px solid rgba(255,255,255,0.14)",
+                  cursor: "pointer",
+                  letterSpacing: "-0.005em",
+                  fontFamily: "Inter, system-ui, sans-serif",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textDecoration: "none",
+                }}
+              >
+                Hablar con el equipo
+              </a>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
@@ -248,6 +433,7 @@ function Hero() {
       >
         <motion.h1
           style={{
+            fontFamily: "var(--font-display)",
             fontSize: "clamp(36px, 5.5vw, 56px)",
             fontWeight: 400,
             letterSpacing: "-0.04em",
@@ -567,6 +753,7 @@ function ProjectRow({ project, index }) {
       transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.05 }}
       onMouseEnter={() => !locked && setHovered(true)}
       onMouseLeave={() => !locked && setHovered(false)}
+      className="project-row"
       style={{
         display: "grid",
         gridTemplateColumns: "1fr auto",
@@ -583,6 +770,7 @@ function ProjectRow({ project, index }) {
       <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
         {/* Image thumb */}
         <div
+          className="project-row-img-wrap"
           style={{
             width: 140,
             height: 96,
@@ -632,6 +820,7 @@ function ProjectRow({ project, index }) {
             {project.nl}
           </div>
           <div
+            className="project-row-title"
             style={{
               fontSize: 19,
               fontWeight: 500,
@@ -1190,8 +1379,8 @@ export function NosotrosScreen() {
           {[
             { num: "+100", label: "Proyectos entregados" },
             { num: "+12",  label: "Sectores distintos" },
-            { num: "4",    label: "Personas en el equipo" },
-            { num: "+3",   label: "Años de experiencia" },
+            { num: "4",    label: "Especialistas dedicados" },
+            { num: "+3",   label: "Años en el mercado" },
           ].map((s, i) => (
             <div
               key={s.label}
