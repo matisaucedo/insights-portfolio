@@ -115,18 +115,23 @@ function StepCard({ step, isActive }) {
       style={{
         background: "rgba(9,10,14,0.97)",
         border: "1px solid rgba(255,255,255,0.065)",
-        borderRadius: 14,
-        padding: "18px 20px",
+        borderRadius: 12,
+        padding: "14px 16px",
         boxShadow: "0 8px 32px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.03)",
         opacity: isActive ? 1 : 0.3,
         transition: "opacity 0.5s ease",
-        maxWidth: 240,
+        maxWidth: 260,
         width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "flex-start",
+        gap: 12,
       }}
     >
-      {/* Pill */}
+      {/* Pill — left column */}
       <div
         style={{
+          flexShrink: 0,
           display: "inline-flex",
           alignItems: "center",
           background: "rgba(250,128,57,0.1)",
@@ -137,36 +142,36 @@ function StepCard({ step, isActive }) {
           letterSpacing: "0.1em",
           color: "#fa8039",
           padding: "3px 10px",
-          marginBottom: 10,
           textTransform: "uppercase",
+          marginTop: 2,
         }}
       >
         Paso {step.num}
       </div>
 
-      {/* Title */}
-      <div
-        style={{
-          fontSize: 15,
-          fontWeight: 500,
-          letterSpacing: "-0.025em",
-          color: "#fff",
-          marginBottom: 6,
-          lineHeight: "1.3em",
-        }}
-      >
-        {step.title}
-      </div>
-
-      {/* Body */}
-      <div
-        style={{
-          fontSize: 12,
-          color: "rgba(255,255,255,0.52)",
-          lineHeight: "1.55em",
-        }}
-      >
-        {step.description}
+      {/* Content — right column */}
+      <div>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 500,
+            letterSpacing: "-0.025em",
+            color: "#fff",
+            marginBottom: 5,
+            lineHeight: "1.3em",
+          }}
+        >
+          {step.title}
+        </div>
+        <div
+          style={{
+            fontSize: 11.5,
+            color: "rgba(255,255,255,0.52)",
+            lineHeight: "1.55em",
+          }}
+        >
+          {step.description}
+        </div>
       </div>
     </div>
   );
