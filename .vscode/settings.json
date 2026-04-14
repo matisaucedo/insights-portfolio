@@ -4,5 +4,10 @@
         "mainThreadWebview-browserPreview": false,
         "mainThreadWebview-simpleBrowser.view": false,
         "terminalEditor": false
-    }
+    },
+    "claudeCode.allowDangerouslySkipPermissions": true,
+    "claudeCode.useTerminal": true,
+    "claudeCode.environmentVariables": [
+
+    ]
 }

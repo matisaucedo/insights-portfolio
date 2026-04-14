@@ -87,8 +87,8 @@
 
   /* Section padding — tighter Minta-style spacing */
   .section-py {
-    padding-top: 64px;
-    padding-bottom: 64px;
+    padding-top: 96px;
+    padding-bottom: 96px;
   }
 
   /* Container */
@@ -101,15 +101,39 @@
   }
 
   @media (max-width: 1199px) {
-    .section-py { padding-top: 56px; padding-bottom: 56px; }
+    .section-py { padding-top: 80px; padding-bottom: 80px; }
   }
-  @media (max-width: 809px) {
-    .section-py { padding-top: 48px; padding-bottom: 48px; }
+  @media (max-width: 1024px) {
+    .section-py { padding-top: 72px; padding-bottom: 72px; }
+    .container-minta { padding-left: 20px; padding-right: 20px; }
+  }
+  @media (max-width: 768px) {
+    .section-py { padding-top: 56px; padding-bottom: 56px; }
     .container-minta { padding-left: 16px; padding-right: 16px; }
     .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
     .mobile-app-layout { flex-direction: column !important; gap: 32px !important; }
     .mobile-app-phone { flex: none !important; height: 300px !important; width: 100%; }
-    .ai-split-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .ai-split-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    
+    .nav-desktop-links { display: none !important; }
+    .nav-hamburger-btn { display: flex !important; }
+    
+    .project-row {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 20px !important;
+    }
+    .project-row-img-wrap {
+      width: 100% !important;
+      height: clamp(180px, 50vw, 220px) !important;
+    }
+    .project-row-title {
+      font-size: clamp(16px, 4.5vw, 19px) !important;
+    }
+  }
+  @media (max-width: 480px) {
+    .section-py { padding-top: 48px; padding-bottom: 48px; }
+    .mobile-app-phone { height: 240px !important; }
   }
   @media (max-width: 360px) {
     .container-minta { padding-left: 12px; padding-right: 12px; }
@@ -120,7 +144,10 @@
   @media (max-width: 1199px) {
     .project-hero-pad { padding-top: 140px; padding-bottom: 120px; }
   }
-  @media (max-width: 809px) {
+  @media (max-width: 1024px) {
+    .project-hero-pad { padding-top: 128px; padding-bottom: 112px; }
+  }
+  @media (max-width: 768px) {
     .project-hero-pad { padding-top: 112px; padding-bottom: 96px; }
   }
   @media (max-width: 600px) {
@@ -137,7 +164,7 @@
     padding-top: 48px;
     margin-top: 64px;
   }
-  @media (max-width: 809px) {
+  @media (max-width: 768px) {
     .project-footer-grid {
       grid-template-columns: 1fr;
       gap: 24px;
