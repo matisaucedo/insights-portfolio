@@ -133,14 +133,13 @@ export const PROJECTS = [
   },
   {
     id: "donor",
-    locked: true,
     niche: "edu",
     nl: "ONG · 3D Web",
     title: "DonorTrack × UNICEF",
     sub: "Landing + Dashboard",
     desc: "Plataforma de donaciones con globo 3D Three.js. Dashboard de métricas de captación de donantes.",
     tags: ["Three.js", "Donations", "Analytics"],
-    img: "/assets/images/donor_app.jpg",
+    img: "/assets/images/donor_cover.jpg",
     gallery: [
       { src: "/assets/images/donor_app.jpg", title: "Globo 3D", caption: "Mapa interactivo con Three.js" },
       { src: "/assets/images/donor_app.jpg", title: "Dashboard", caption: "Métricas de captación de donantes" },
@@ -148,6 +147,11 @@ export const PROJECTS = [
       { src: "/assets/images/donor_app.jpg", title: "Reportes", caption: "Análisis de impacto por región" },
       { src: "/assets/images/donor_app.jpg", title: "Campañas", caption: "Gestión de campañas activas" },
     ],
+    mockup: {
+      device: "split",
+      macSrc: "https://donortrack-landing.onrender.com/",
+      iphoneSrc: "https://donortrack-landing.onrender.com/",
+    },
   },
   {
     id: "table",

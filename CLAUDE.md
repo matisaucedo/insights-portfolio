@@ -134,6 +134,8 @@ npm run preview      # Build + serve at :3000
 - Build Command: `npm install && npm run build`  ← importante: instala devDeps (vite)
 - Start Command: `npm start`
 - Branch: `main` (auto-deploy on push)
+- URL: https://www.insightsapps.tech/
+- Service ID: `srv-d7a1o70gjchc739sqpf0`
 
 ---
 
