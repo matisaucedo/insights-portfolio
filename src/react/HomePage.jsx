@@ -20,6 +20,7 @@ const TEAM = [
   { key: "juan", name: "Juan", role: "Co-Fundador · Comercial", desc: "Gestiona relaciones con clientes y cierra acuerdos. Cara comercial de Insights.", img: "/assets/images/team/juan.png" },
   { key: "matias", name: "Matías", role: "VISUAL · IA", desc: "Frontend development, edición de video y dirección visual. Potencia cada workflow creativo con IA.", img: "/assets/images/team/matias.png" },
   { key: "toledo", name: "Valentín", role: "Desarrollo · IA", desc: "Programador e implementador de todos los productos. Especialista en automatización con IA.", img: "/assets/images/team/valentin.png" },
+  { key: "facu", name: "Facundo", role: "Desarrollo Full Stack", desc: "Desarrollador full stack con foco en arquitectura escalable e integración de APIs.", img: "/assets/images/team/facu.png" },
 ];
 
 const TESTIMONIALS = [

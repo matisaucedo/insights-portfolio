@@ -100,7 +100,7 @@ export default function GuaranteesSection() {
                   margin: 0,
                 }}
               >
-                Si no te gusta, te devolvemos toda la plata.
+                Si no estás conforme, te devolvemos el 100% del dinero.
               </h2>
             </FadeUp>
             <FadeUp delay={0.15}>
