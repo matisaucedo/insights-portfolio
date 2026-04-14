@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import Section from "../components/ui/Section.jsx";
 import Container from "../components/ui/Container.jsx";
