@@ -1,10 +1,33 @@
+import { useEffect } from 'react';
+import GraciasHero from '../sections/gracias/GraciasHero.jsx';
+import GraciasBooking from '../sections/gracias/GraciasBooking.jsx';
+
 export default function GraciasPage() {
+  useEffect(() => {
+    document.title = 'Gracias · Insights Software';
+  }, []);
+
   return (
-    <main className="min-h-screen grid place-items-center bg-bg text-txt">
-      <div className="text-center">
-        <p className="text-sm uppercase tracking-[0.18em] text-muted">placeholder</p>
-        <h1 className="mt-4 text-3xl font-light">/gracias — en construcción</h1>
-      </div>
+    <main style={{ backgroundColor: '#0a0a0a', color: '#fff', minHeight: '100vh' }}>
+      <GraciasHero />
+      <div
+        style={{
+          height: 1,
+          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)',
+        }}
+      />
+      <GraciasBooking />
+      <footer
+        style={{
+          padding: '48px 24px',
+          textAlign: 'center',
+          color: '#8a8a8a',
+          fontSize: 13,
+          letterSpacing: '0.02em',
+        }}
+      >
+        © {new Date().getFullYear()} Insights Software — Creamos tu software a medida
+      </footer>
     </main>
   );
 }
