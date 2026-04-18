@@ -147,6 +147,7 @@ export const PROJECTS = [
       { src: "/assets/images/donor_app.jpg", title: "Reportes", caption: "Análisis de impacto por región" },
       { src: "/assets/images/donor_app.jpg", title: "Campañas", caption: "Gestión de campañas activas" },
     ],
+    appNote: "La app está construida como web responsive — funciona como app móvil desde el navegador.",
     mockup: {
       device: "split",
       macSrc: "https://donortrack-landing.onrender.com/",

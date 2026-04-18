@@ -95,6 +95,8 @@ export default function MobileApp() {
             <img
               src="/ref/phm5fx1mcnnvyhsv1wbiigpka.png"
               alt="App mobile"
+              loading="lazy"
+              decoding="async"
               style={{
                 position: "absolute",
                 inset: 0,

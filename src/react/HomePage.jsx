@@ -77,6 +77,8 @@ export function Nav() {
     return () => drawer.removeEventListener('keydown', handleKeyDown);
   }, [drawerOpen]);
 
+  useEffect(() => { setDrawerOpen(false); }, [location.pathname]);
+
   const burgerVariants = {
     closed: {},
     open: {},
@@ -110,6 +112,9 @@ export function Nav() {
           src={LogoSvg}
           alt="Insights Software"
           height={26}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
           style={{ height: 26, width: "auto", display: "block" }}
         />
       </Link>
@@ -152,10 +157,8 @@ export function Nav() {
       </div>
 
       {/* CTA pill — desktop */}
-      <motion.a
-        href={WHATSAPP_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      <MotionLink
+        to="/contacto"
         className="nav-desktop-links"
         style={{
           fontSize: 13,
@@ -177,7 +180,7 @@ export function Nav() {
         transition={{ duration: 0.18 }}
       >
         Hablar con el equipo
-      </motion.a>
+      </MotionLink>
 
       {/* Hamburger button — mobile only */}
       <motion.button
@@ -293,10 +296,8 @@ export function Nav() {
               </nav>
 
               {/* CTA button */}
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/contacto"
                 onClick={() => setDrawerOpen(false)}
                 style={{
                   marginTop: "auto",
@@ -318,7 +319,7 @@ export function Nav() {
                 }}
               >
                 Hablar con el equipo
-              </a>
+              </Link>
             </motion.div>
           </>
         )}
@@ -375,8 +376,8 @@ function Hero() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "flex-end",
-        paddingBottom: 80,
+        justifyContent: "center",
+        paddingTop: "8vh",
         overflow: "hidden",
         background: "#000",
       }}
@@ -393,6 +394,8 @@ function Hero() {
           opacity: bgOpacity,
           y: bgY,
           willChange: "transform, opacity",
+          WebkitMaskImage: "radial-gradient(ellipse 75% 70% at 50% 38%, rgba(0,0,0,1) 30%, transparent 72%)",
+          maskImage: "radial-gradient(ellipse 75% 70% at 50% 38%, rgba(0,0,0,1) 30%, transparent 72%)",
         }}
       />
       {/* Gradient */}
@@ -583,7 +586,7 @@ export function ProyectosScreen() {
               <path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.40)" }}>
-              +100 proyectos entregados
+              +10 proyectos entregados
             </span>
           </motion.div>
 
@@ -1049,7 +1052,8 @@ function ProcesoScreen() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: "easeOut", delay: 0.9 }}
         >
-          <motion.button
+          <MotionLink
+            to="/contacto"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -1064,13 +1068,13 @@ function ProcesoScreen() {
               height: 48,
               cursor: "pointer",
               fontFamily: "Inter, system-ui, sans-serif",
+              textDecoration: "none",
             }}
             whileHover={{ background: "rgba(255,255,255,0.14)" }}
             transition={{ duration: 0.2 }}
-            onClick={() => window.open(WHATSAPP_URL, "_blank")}
           >
             Quiero agendar →
-          </motion.button>
+          </MotionLink>
         </motion.div>
       </div>
     </div>
@@ -1179,7 +1183,9 @@ function TeamSpotlight() {
                   alt={member.name}
                   width={280}
                   height={420}
-                  loading="lazy"
+                  loading={offset === 0 ? "eager" : "lazy"}
+                  fetchpriority={offset === 0 ? "high" : undefined}
+                  decoding="async"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -1345,7 +1351,7 @@ export function NosotrosScreen() {
           >
             Cuatro personas.
             <br />
-            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.55)" }}>Más de 100 proyectos.</em>
+            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.55)" }}>Más de 10 proyectos.</em>
           </motion.h1>
 
           <motion.p
@@ -1377,7 +1383,7 @@ export function NosotrosScreen() {
           transition={{ duration: 0.65, ease: "easeOut", delay: 0.4 }}
         >
           {[
-            { num: "+100", label: "Proyectos entregados" },
+            { num: "+10", label: "Proyectos entregados" },
             { num: "+12",  label: "Sectores distintos" },
             { num: "4",    label: "Especialistas dedicados" },
             { num: "+3",   label: "Años en el mercado" },
@@ -1439,6 +1445,7 @@ export function NosotrosScreen() {
                 width={600}
                 height={450}
                 loading="lazy"
+                decoding="async"
                 style={{ width: "100%", display: "block", objectFit: "cover", aspectRatio: "4/3" }}
                 onError={e => { e.target.parentElement.style.background = "#111"; e.target.style.display = "none"; }}
               />
@@ -1584,10 +1591,8 @@ export function NosotrosScreen() {
           <p style={{ fontSize: 16, color: "#8a8a8a", marginBottom: 36, lineHeight: "1.5em" }}>
             En menos de una llamada definimos qué necesitás, cuánto cuesta y cuándo lo tenés listo.
           </p>
-          <motion.a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <MotionLink
+            to="/contacto"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -1611,7 +1616,7 @@ export function NosotrosScreen() {
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
             </svg>
             Hablar con el equipo
-          </motion.a>
+          </MotionLink>
         </motion.div>
       </div>
       <Footer />
@@ -1710,7 +1715,7 @@ function Footer() {
       >
         <p style={{ fontSize: 11.5, color: "#666", lineHeight: "1.65em", maxWidth: 900, marginBottom: 12 }}>
           Insights Software es una agencia líder en desarrollo de software a medida, aplicaciones móviles iOS y Android, y plataformas web escalables.
-          Especializados en React, Next.js, Node.js, Python e inteligencia artificial aplicada (OpenAI). Con más de 100 proyectos entregados y 100% de satisfacción, construimos
+          Especializados en React, Next.js, Node.js, Python e inteligencia artificial aplicada (OpenAI). Con más de 10 proyectos entregados y 100% de satisfacción, construimos
           soluciones a medida con IA como ventaja competitiva. Presentes en Argentina, Uruguay, Colombia, Chile y España.
         </p>
         <p style={{ fontSize: 11.5, color: "#555" }}>
