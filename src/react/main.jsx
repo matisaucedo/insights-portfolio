@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
@@ -38,9 +38,14 @@ function App() {
     };
   }, [location.pathname]);
 
+  // Sync (before paint) — fixes whileInView firing at wrong scroll position
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  // Async — syncs Lenis internal state after it's created
   useEffect(() => {
     if (window.lenis) window.lenis.scrollTo(0, { immediate: true });
-    else window.scrollTo(0, 0);
   }, [location.pathname]);
 
   return (
