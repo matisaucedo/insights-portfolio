@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useReducedMotion,
@@ -118,11 +118,18 @@ export default function GraciasHero() {
 
   const { scrollY } = useScroll();
   const videoY = useTransform(scrollY, [0, 600], [0, -40]);
+  const [playing, setPlaying] = useState(false);
 
   function handleScrollToBooking() {
     document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
   }
 
+  function handlePlay() {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setPlaying(true);
+    }
+  }
 
   const initial = shouldReduce ? "show" : "hidden";
   const animate = "show";
@@ -316,8 +323,6 @@ export default function GraciasHero() {
               <video
                 ref={videoRef}
                 src="/assets/gracias-hero.mp4"
-                autoPlay
-                muted
                 loop
                 playsInline
                 style={{
@@ -327,6 +332,42 @@ export default function GraciasHero() {
                   display: "block",
                 }}
               />
+              {!playing && (
+                <button
+                  onClick={handlePlay}
+                  aria-label="Reproducir video"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    background: "rgba(0,0,0,0.28)",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.18)",
+                    backdropFilter: "blur(12px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(12px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.30)",
+                    boxShadow: "0 0 32px rgba(250,128,57,0.35), inset 0 1px 0 rgba(255,255,255,0.22)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" style={{ marginLeft: 3 }}>
+                      <path d="M5 3l14 9-14 9V3z"/>
+                    </svg>
+                  </div>
+                </button>
+              )}
             </div>
           </motion.div>
         </div>
