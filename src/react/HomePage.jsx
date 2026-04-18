@@ -376,8 +376,8 @@ function Hero() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "flex-end",
-        paddingBottom: "22vh",
+        justifyContent: "center",
+        paddingTop: "8vh",
         overflow: "hidden",
         background: "#000",
       }}
@@ -394,8 +394,8 @@ function Hero() {
           opacity: bgOpacity,
           y: bgY,
           willChange: "transform, opacity",
-          WebkitMaskImage: "radial-gradient(ellipse 90% 85% at 50% 40%, rgba(0,0,0,1) 45%, transparent 100%)",
-          maskImage: "radial-gradient(ellipse 90% 85% at 50% 40%, rgba(0,0,0,1) 45%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 75% 70% at 50% 38%, rgba(0,0,0,1) 30%, transparent 72%)",
+          maskImage: "radial-gradient(ellipse 75% 70% at 50% 38%, rgba(0,0,0,1) 30%, transparent 72%)",
         }}
       />
       {/* Gradient */}
@@ -1183,7 +1183,8 @@ function TeamSpotlight() {
                   alt={member.name}
                   width={280}
                   height={420}
-                  loading="lazy"
+                  loading={offset === 0 ? "eager" : "lazy"}
+                  fetchpriority={offset === 0 ? "high" : undefined}
                   decoding="async"
                   style={{
                     width: "100%",
