@@ -93,11 +93,10 @@ function Tags({ tags, center = false }) {
 }
 
 function CtaButton() {
+  const { id } = useParams();
   return (
-    <motion.a
-      href={WHATSAPP_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+    <MotionLink
+      to={`/contacto/${id}`}
       variants={fadeItem}
       style={{
         display: "inline-flex",
@@ -124,7 +123,7 @@ function CtaButton() {
         <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
       </svg>
       Contactar sobre este proyecto
-    </motion.a>
+    </MotionLink>
   );
 }
 
@@ -222,6 +221,27 @@ function ProjectHero({ project, centered }) {
           {project.sub}
         </span>
       </motion.div>
+
+      {project.appNote && (
+        <motion.div
+          variants={fadeItem}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 20,
+            padding: "6px 14px",
+            borderRadius: 999,
+            background: "rgba(250,128,57,0.06)",
+            border: "1px solid rgba(250,128,57,0.22)",
+            fontSize: 12.5,
+            color: "#fa8039",
+            lineHeight: "1.5em",
+          }}
+        >
+          {project.appNote}
+        </motion.div>
+      )}
 
       {centered && (
         <motion.p

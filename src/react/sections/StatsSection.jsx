@@ -4,7 +4,7 @@ import Section from "../components/ui/Section.jsx";
 import Container from "../components/ui/Container.jsx";
 
 const STATS = [
-  { value: 100, prefix: "+", suffix: "", label: "Proyectos entregados" },
+  { value: 10, prefix: "+", suffix: "", label: "Proyectos entregados" },
   { value: 12,  prefix: "+", suffix: "", label: "Sectores distintos" },
   { value: 4,   prefix: "",  suffix: "", label: "Especialistas dedicados" },
   { value: 3,   prefix: "+", suffix: "", label: "Años en el mercado" },
