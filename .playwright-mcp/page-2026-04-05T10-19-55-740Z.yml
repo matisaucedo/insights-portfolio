@@ -1,5 +1,0 @@
-- generic [active] [ref=e1]:
-  - img "blurhash" [ref=e2]
-  - link [ref=e4] [cursor=pointer]:
-    - /url: https://spline.design/?utm_source=public-url&utm_campaign=spline-logo
-    - img [ref=e6]
