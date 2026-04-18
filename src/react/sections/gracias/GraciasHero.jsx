@@ -123,10 +123,6 @@ export default function GraciasHero() {
     document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  function handleScrollToVideo() {
-    videoRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    if (videoRef.current?.paused) videoRef.current.play();
-  }
 
   const initial = shouldReduce ? "show" : "hidden";
   const animate = "show";
@@ -296,17 +292,6 @@ export default function GraciasHero() {
                 </span>
               </button>
 
-              {/* Secondary — vertical label slide + border brighten */}
-              <button
-                onClick={handleScrollToVideo}
-                className="cta-editr cta-secondary touch-manipulation"
-              >
-                <span aria-hidden="true" style={{ fontSize: 12 }}>▶</span>
-                <span className="cta-editr__labels">
-                  <span className="cta-editr__label">Ver video</span>
-                  <span className="cta-editr__label" aria-hidden="true">Ver video</span>
-                </span>
-              </button>
             </motion.div>
           </div>
 
@@ -330,7 +315,7 @@ export default function GraciasHero() {
             >
               <video
                 ref={videoRef}
-                src="/gracias-hero.mp4"
+                src="/assets/gracias-hero.mp4"
                 autoPlay
                 muted
                 loop
