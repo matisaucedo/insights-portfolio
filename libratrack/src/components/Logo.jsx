@@ -1,5 +1,5 @@
-// Lines + Dot logo — 3 líneas horizontales decrecientes + dot
-export default function Logo({ size = 24, className = '' }) {
+// Lines + Dot logo — supports light (dark bg) and dark (light bg) contexts
+export default function Logo({ size = 24, className = '', light = false }) {
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <svg
@@ -20,7 +20,7 @@ export default function Logo({ size = 24, className = '' }) {
           fontWeight: 300,
           letterSpacing: '-0.05em',
           lineHeight: 1,
-          color: '#1a1a18',
+          color: light ? '#fff' : '#1a1a18',
         }}
       >
         Libra<span style={{ color: '#34D399' }}>Track</span>

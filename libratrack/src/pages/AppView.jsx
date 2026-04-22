@@ -38,7 +38,7 @@ export default function AppView() {
           background: '#071209',
         }}
       >
-        <Logo size={18} />
+        <Logo size={18} light />
         <div style={{ marginTop: 20 }}>
           <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.38)', marginBottom: 4 }}>
             Buen día, Matías 👋

@@ -2,9 +2,17 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Logo from './Logo'
 
-const NAV_LINKS = ['Funciones', 'Precios', 'Contacto']
+const NAV_LINKS = [
+  { label: 'Funciones', href: 'funciones' },
+  { label: 'Cómo funciona', href: 'como-funciona' },
+  { label: 'Precios', href: 'precios' },
+]
 
-export default function Navbar() {
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+export default function Navbar({ onCta }) {
   return (
     <motion.nav
       initial={{ opacity: 0, y: -12 }}
@@ -33,24 +41,28 @@ export default function Navbar() {
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
         {NAV_LINKS.map((link) => (
-          <a
-            key={link}
-            href="#"
+          <button
+            key={link.label}
+            onClick={() => scrollTo(link.href)}
             style={{
               fontSize: 13,
               color: '#a0a09c',
-              textDecoration: 'none',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
+              fontFamily: 'inherit',
               transition: 'color 0.2s',
             }}
             onMouseEnter={(e) => (e.target.style.color = '#1a1a18')}
             onMouseLeave={(e) => (e.target.style.color = '#a0a09c')}
           >
-            {link}
-          </a>
+            {link.label}
+          </button>
         ))}
 
-        <motion.a
-          href="#"
+        <motion.button
+          onClick={onCta ?? (() => scrollTo('precios'))}
           whileHover={{ background: 'rgba(52,211,153,0.12)', borderColor: 'rgba(52,211,153,0.45)' }}
           transition={{ duration: 0.2 }}
           style={{
@@ -64,11 +76,12 @@ export default function Navbar() {
             border: '1px solid rgba(52,211,153,0.25)',
             borderRadius: 999,
             padding: '6px 16px',
-            textDecoration: 'none',
+            cursor: 'pointer',
+            fontFamily: 'inherit',
           }}
         >
           Empezar →
-        </motion.a>
+        </motion.button>
       </div>
     </motion.nav>
   )
