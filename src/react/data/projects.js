@@ -240,8 +240,8 @@ export const PROJECTS = [
     img: "/assets/images/table_app.jpg",
     mockup: {
       device: "split",
-      macSrc: "https://donortrack-landing.onrender.com/",
-      iphoneSrc: "https://donortrack-landing.onrender.com/",
+      macSrc: "https://libratrack-lnb7.onrender.com/",
+      iphoneSrc: "https://libratrack-lnb7.onrender.com/app",
       macLabel: "Panel Bibliotecario",
       iphoneLabel: "App Socios",
     },
