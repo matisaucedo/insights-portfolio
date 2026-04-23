@@ -20,7 +20,7 @@ const TEAM = [
   { key: "juan", name: "Juan", role: "Co-Fundador · Comercial", desc: "Gestiona relaciones con clientes y cierra acuerdos. Cara comercial de Insights.", img: "/assets/images/team/juan.png" },
   { key: "matias", name: "Matías", role: "Visual · IA", desc: "Frontend development, edición de video y dirección visual. Potencia cada workflow creativo con IA.", img: "/assets/images/team/matias.png" },
   { key: "toledo", name: "Valentín", role: "Desarrollo · IA", desc: "Programador e implementador de todos los productos. Especialista en automatización con IA.", img: "/assets/images/team/valentin.png" },
-  { key: "facu", name: "Facundo", role: "Full Stack · Backend", desc: "Desarrollador full stack con foco en arquitectura escalable e integración de APIs.", img: "/assets/images/team/facu.png" },
+  { key: "facu", name: "Nicolas", role: "Full Stack · Backend", desc: "Desarrollador full stack con foco en arquitectura escalable e integración de APIs.", img: "/assets/images/team/facu.png" },
 ];
 
 const TESTIMONIALS = [
@@ -614,16 +614,36 @@ function Hero() {
 }
 
 /* ─── Proyectos Screen ───────────────────────────────────────────────────── */
+const PROJECTS_PER_PAGE = 10;
+
 export function ProyectosScreen() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [page, setPage] = useState(0);
   const dropRef = useRef(null);
+  const gridRef = useRef(null);
 
   const filtered = (activeFilter === "all" ? PROJECTS : PROJECTS.filter(p => p.niche === activeFilter))
     .filter(p => !p.hidden)
     .slice()
     .sort((a, b) => (a.locked ? 1 : 0) - (b.locked ? 1 : 0));
+
+  const totalPages = Math.ceil(filtered.length / PROJECTS_PER_PAGE);
+  const start = page * PROJECTS_PER_PAGE;
+  const end = Math.min(start + PROJECTS_PER_PAGE, filtered.length);
+  const paged = filtered.slice(start, end);
+
   const activeLabel = NICHES.find(n => n.key === activeFilter)?.label || "Todos";
+
+  // Reset page when filter changes
+  useEffect(() => { setPage(0); }, [activeFilter]);
+
+  function goToPage(p) {
+    setPage(p);
+    if (gridRef.current) {
+      gridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 
   useEffect(() => {
     function mouseHandler(e) {
@@ -728,8 +748,9 @@ export function ProyectosScreen() {
 
       {/* Filter + grid */}
       <div className="container-minta" style={{ paddingTop: 48, position: "relative", zIndex: 2 }}>
-        {/* Filter dropdown */}
-        <div ref={dropRef} style={{ position: "relative", display: "inline-block", marginBottom: 40 }}>
+        {/* Filter + pagination bar */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 40 }}>
+        <div ref={dropRef} style={{ position: "relative", display: "inline-block" }}>
           <motion.button
             onClick={() => setFilterOpen(o => !o)}
             whileHover={{ scale: 1.02 }}
@@ -823,6 +844,68 @@ export function ProyectosScreen() {
           </AnimatePresence>
         </div>
 
+        {/* Pagination counter + nav */}
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <motion.button
+            onClick={() => page > 0 && goToPage(page - 1)}
+            whileTap={{ scale: 0.9 }}
+            disabled={page === 0}
+            style={{
+              width: 28, height: 28,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              borderRadius: 6,
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "transparent",
+              color: page === 0 ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.55)",
+              cursor: page === 0 ? "not-allowed" : "pointer",
+              transition: "color 0.15s, border-color 0.15s",
+            }}
+            onMouseEnter={e => { if (page > 0) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; e.currentTarget.style.color = "#fff"; } }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = page === 0 ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.55)"; }}
+          >
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </motion.button>
+
+          <span style={{
+            fontSize: 12,
+            color: "rgba(255,255,255,0.38)",
+            fontVariantNumeric: "tabular-nums",
+            letterSpacing: "0.01em",
+            padding: "0 10px",
+            whiteSpace: "nowrap",
+          }}>
+            {filtered.length === 0 ? "0" : `${start + 1} – ${end}`}
+            <span style={{ color: "rgba(255,255,255,0.20)", margin: "0 4px" }}>de</span>
+            {filtered.length}
+          </span>
+
+          <motion.button
+            onClick={() => page < totalPages - 1 && goToPage(page + 1)}
+            whileTap={{ scale: 0.9 }}
+            disabled={page >= totalPages - 1}
+            style={{
+              width: 28, height: 28,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              borderRadius: 6,
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "transparent",
+              color: page >= totalPages - 1 ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.55)",
+              cursor: page >= totalPages - 1 ? "not-allowed" : "pointer",
+              transition: "color 0.15s, border-color 0.15s",
+            }}
+            onMouseEnter={e => { if (page < totalPages - 1) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; e.currentTarget.style.color = "#fff"; } }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = page >= totalPages - 1 ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.55)"; }}
+          >
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </motion.button>
+        </div>
+
+        </div>{/* end filter+pagination bar */}
+
         {/* Divider */}
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 40 }}>
           <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.07)" }} />
@@ -833,16 +916,89 @@ export function ProyectosScreen() {
         </div>
 
         {/* Project grid */}
-        <motion.div
-          style={{ display: "flex", flexDirection: "column", gap: 2 }}
-          layout
-        >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => (
-              <ProjectRow key={p.id} project={p} index={i} />
+        <div ref={gridRef} style={{ scrollMarginTop: 80 }}>
+          <motion.div
+            style={{ display: "flex", flexDirection: "column", gap: 2 }}
+            layout
+          >
+            <AnimatePresence mode="popLayout">
+              {paged.map((p, i) => (
+                <ProjectRow key={`${p.id}-${page}`} project={p} index={i} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+
+        {/* Bottom pagination */}
+        {totalPages > 1 && (
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, paddingTop: 48, paddingBottom: 16 }}>
+            <motion.button
+              onClick={() => page > 0 && goToPage(page - 1)}
+              whileTap={{ scale: 0.9 }}
+              disabled={page === 0}
+              style={{
+                width: 32, height: 32,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                borderRadius: 8,
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "transparent",
+                color: page === 0 ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.55)",
+                cursor: page === 0 ? "not-allowed" : "pointer",
+              }}
+              onMouseEnter={e => { if (page > 0) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; e.currentTarget.style.color = "#fff"; } }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = page === 0 ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.55)"; }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </motion.button>
+
+            {Array.from({ length: totalPages }, (_, i) => i).map(p => (
+              <motion.button
+                key={p}
+                onClick={() => goToPage(p)}
+                whileTap={{ scale: 0.9 }}
+                style={{
+                  width: 32, height: 32,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  borderRadius: 8,
+                  border: p === page ? "1px solid rgba(255,255,255,0.22)" : "1px solid rgba(255,255,255,0.07)",
+                  background: p === page ? "rgba(255,255,255,0.07)" : "transparent",
+                  color: p === page ? "#fff" : "rgba(255,255,255,0.38)",
+                  fontSize: 12,
+                  cursor: "pointer",
+                  fontFamily: "Inter, system-ui, sans-serif",
+                  transition: "all 0.15s",
+                }}
+                onMouseEnter={e => { if (p !== page) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.16)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; } }}
+                onMouseLeave={e => { if (p !== page) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.color = "rgba(255,255,255,0.38)"; } }}
+              >
+                {p + 1}
+              </motion.button>
             ))}
-          </AnimatePresence>
-        </motion.div>
+
+            <motion.button
+              onClick={() => page < totalPages - 1 && goToPage(page + 1)}
+              whileTap={{ scale: 0.9 }}
+              disabled={page >= totalPages - 1}
+              style={{
+                width: 32, height: 32,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                borderRadius: 8,
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "transparent",
+                color: page >= totalPages - 1 ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.55)",
+                cursor: page >= totalPages - 1 ? "not-allowed" : "pointer",
+              }}
+              onMouseEnter={e => { if (page < totalPages - 1) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; e.currentTarget.style.color = "#fff"; } }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = page >= totalPages - 1 ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.55)"; }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </motion.button>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
@@ -892,23 +1048,33 @@ function ProjectRow({ project, index }) {
             position: "relative",
           }}
         >
-          <motion.img
-            src={project.img}
-            alt={project.title}
-            loading="lazy"
-            decoding="async"
-            animate={{ scale: hovered && !locked ? 1.06 : 1 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            style={{
+          {locked && !project.img ? (
+            <div style={{
               width: "100%",
               height: "100%",
-              objectFit: "cover",
-              display: "block",
-              filter: locked ? "grayscale(1) brightness(0.4)" : undefined,
-              transformOrigin: "center",
-            }}
-            onError={e => { e.target.style.display = "none"; }}
-          />
+              background: "linear-gradient(90deg, #181818 25%, #252525 50%, #181818 75%)",
+              backgroundSize: "200% 100%",
+              animation: "shimmer 1.8s ease-in-out infinite",
+            }} />
+          ) : (
+            <motion.img
+              src={project.img}
+              alt={project.title}
+              loading="lazy"
+              decoding="async"
+              animate={{ scale: hovered && !locked ? 1.06 : 1 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+                filter: locked ? "grayscale(1) brightness(0.4)" : undefined,
+                transformOrigin: "center",
+              }}
+              onError={e => { e.target.style.display = "none"; }}
+            />
+          )}
           {locked && (
             <div style={{
               position: "absolute",
@@ -917,7 +1083,7 @@ function ProjectRow({ project, index }) {
               alignItems: "center",
               justifyContent: "center",
             }}>
-              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
@@ -1226,7 +1392,13 @@ function TeamSpotlight() {
   };
 
   return (
-    <div style={{ userSelect: "none", marginBottom: 80, overflow: "hidden" }}>
+    <motion.div
+      style={{ userSelect: "none", marginBottom: 80, overflow: "hidden" }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.65, ease: "easeOut" }}
+    >
 
       {/* ── Glow behind carousel ───────────────────────── */}
       <div style={{
@@ -1430,7 +1602,7 @@ function TeamSpotlight() {
           </motion.p>
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -7,7 +7,11 @@ export default function Gallery({ images = [] }) {
   if (!images.length) return null;
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       style={{
         display: "flex",
         flexDirection: "row",
@@ -50,6 +54,7 @@ export default function Gallery({ images = [] }) {
               src={image.src}
               alt={image.title || image.caption}
               loading="lazy"
+              decoding="async"
               animate={{
                 scale: isActive ? 1.04 : 1,
                 filter: isActive ? "brightness(1)" : "brightness(0.5)",
@@ -62,10 +67,11 @@ export default function Gallery({ images = [] }) {
                 borderRadius: "12px",
                 display: "block",
                 transformOrigin: "center",
+                filter: "blur(10px)",
+                transition: "filter 0.45s ease",
               }}
-              onError={(e) => {
-                e.target.style.background = "#1a1a1a";
-              }}
+              onLoad={e => { e.target.style.filter = ""; }}
+              onError={e => { e.target.style.background = "#1a1a1a"; }}
             />
 
             {/* Overlay — only on active card */}
@@ -135,6 +141,6 @@ export default function Gallery({ images = [] }) {
           </div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }
