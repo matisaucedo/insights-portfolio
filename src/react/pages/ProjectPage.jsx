@@ -330,8 +330,15 @@ function MockupSwitcher({ value, onChange, options }) {
             }}
           >
             {active && (
+              // NOTE: was layoutId="mockup-switch-pill" — replaced with key-based opacity
+              // animation because layoutId blocks AnimatePresence.onExitComplete when
+              // the element leaves the tree without a matching destination (navigating away).
               <motion.span
-                layoutId="mockup-switch-pill"
+                key={opt.key}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18 }}
                 style={{
                   position: "absolute",
                   inset: 0,
@@ -345,7 +352,6 @@ function MockupSwitcher({ value, onChange, options }) {
                   WebkitBackdropFilter: "blur(16px) saturate(200%)",
                   zIndex: -1,
                 }}
-                transition={{ type: "spring", stiffness: 320, damping: 28, mass: 0.9 }}
               />
             )}
             <span style={{ position: "relative" }}>{opt.label}</span>
