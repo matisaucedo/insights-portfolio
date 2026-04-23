@@ -430,7 +430,6 @@ function MockupBlock({ mockup }) {
           maxWidth: "min(860px, 100%)",
           marginTop: 40,
           minHeight: IPHONE_MAX,
-          overflow: "hidden",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
