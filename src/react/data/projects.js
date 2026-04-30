@@ -190,16 +190,16 @@ export const PROJECTS = [
   {
     id: "build",
     niche: "const",
-    nl: "Construcción · SaaS",
+    nl: "Construcción · Landing Premium",
     title: "BuildCore",
-    sub: "Gestión de Obras sin el Caos",
-    desc: "SaaS para constructoras con Gantt de obras, gestión de tareas y equipos de campo, control de presupuesto planificado vs. real, y app móvil para terreno. Todo en un solo lugar.",
-    tags: ["Gantt Chart", "Project Mgmt", "React", "SaaS", "App Móvil"],
+    sub: "Landing de Construcción de Alto Impacto",
+    desc: "Landing premium para constructora con animaciones scroll-driven fieles al template MONO. Hero con bento expandible, rotación 3D de frases, galería de cards apiladas, sección oscura con reveal por palabra y diseño full responsive. Vite + React + Tailwind sin dependencias de animación.",
+    tags: ["Scroll FX", "Vite", "React", "Tailwind", "Responsive"],
     img: "/assets/images/build_app.jpg",
     mockup: {
       device: "split",
-      macSrc: "http://localhost:5174",
-      iphoneSrc: "http://localhost:5174",
+      macSrc: "https://buildcore-p143.onrender.com",
+      iphoneSrc: "https://buildcore-p143.onrender.com",
     },
   },
   {
